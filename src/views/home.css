@@ -48,14 +48,14 @@
   
   .image-placeholder {
     width: 128px;
-    height: 128px;
+    height: 250px;
     background-color: #d1d1d1;
   }
   
   .large-image-placeholder {
     width: 100%;
     max-width: 900px;
-    height: 200px;
+    height: 1000px;
     background-color: #d1d1d1;
   }
   

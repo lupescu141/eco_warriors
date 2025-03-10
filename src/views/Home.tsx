@@ -11,7 +11,7 @@ const Home = () => {
       <div className="home-content">
         <h2 className="home-subtitle">Lorem Ipsum</h2>
         <p className="home-text">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
         </p>
       </div>
 
@@ -19,6 +19,8 @@ const Home = () => {
       <div className="newest-posts">
         <h3>Newest Posts</h3>
         <div className="image-row">
+          <div className="image-placeholder"></div>
+          <div className="image-placeholder"></div>
           <div className="image-placeholder"></div>
           <div className="image-placeholder"></div>
           <div className="image-placeholder"></div>

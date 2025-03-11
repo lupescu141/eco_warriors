@@ -4,15 +4,17 @@ import Layout from "./views/Layout";
 import Home from "./views/Home";
 import Posts from "./views/Posts";
 import Login from "./views/Login";
+import SinglePost from "./views/SinglePost";
 
 const App = () => {
   return (
     <Router>
       <Routes>
         <Route element={<Layout />}>
-          <Route path="/home" element={<Home />} />
+          <Route path="/" element={<Home />} />
           <Route path="/posts" element={<Posts />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/single" element={<SinglePost />} />
         </Route>
       </Routes>
     </Router>

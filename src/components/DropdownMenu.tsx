@@ -5,20 +5,29 @@ const DropdownMenu = () => {
     <div className="dropdown-menu">
       <ul>
         <li>
-          <a href="/login">Login</a>
+          <button>My posts</button>
         </li>
         <li>
-          <a href="/userposts">My posts</a>
+          <button>Assignments</button>
         </li>
         <li>
-          <a href="/asignments">Assignments</a>
-        </li>
-        <li>
-          <a href="/logout">Logout</a>
+          <button>Logout</button>
         </li>
       </ul>
     </div>
   );
 };
 
-export default DropdownMenu;
+const DropdownMenuNotLoggedIn = () => {
+  return (
+    <div className="dropdown-menu">
+      <ul>
+        <li>
+          <button>Login</button>
+        </li>
+      </ul>
+    </div>
+  );
+};
+
+export { DropdownMenu, DropdownMenuNotLoggedIn };

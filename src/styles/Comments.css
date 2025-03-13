@@ -1,0 +1,37 @@
+.comment-container {
+  margin: 2rem 0.5rem;
+}
+.comment-container > h2 {
+  margin-bottom: 2rem;
+}
+
+.single-container {
+  margin: 1rem 0;
+}
+
+.comment-header {
+  margin: 0.5em 0;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.profile-pic {
+  width: 50px;
+  height: 50px;
+  background-color: lightgray;
+  border-radius: 4rem;
+}
+.username-time {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.username-time > p {
+  color: gray;
+}
+.comment {
+  padding: 0.5em 0.5em 1em 0.5em;
+}
+hr {
+  opacity: 0.4;
+}

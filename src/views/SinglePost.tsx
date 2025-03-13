@@ -3,6 +3,7 @@ import { NavigateFunction } from "react-router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "../styles/Posts.css";
 import { faCircleUser, faClock } from "@fortawesome/free-solid-svg-icons";
+import Comments from "../components/Comments";
 
 type Post = {
   post_id: number;
@@ -75,6 +76,7 @@ const SinglePost = () => {
         <button onClick={() => navigate(-1)}>Go back</button>
 
         {/* COMMENTS */}
+        <Comments />
       </div>
     </>
   );

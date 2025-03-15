@@ -43,27 +43,46 @@ import "../styles/Comments.css";
 // const Comments = ({ comments }: MockdataProps) => {
 const Comments = () => {
   return (
-    <div className="comment-container">
-      <h2>Comments (3)</h2>
+    <>
+      {/* KOMMENTIT */}
+      <div className="comment-container">
+        <h2>Comments (3)</h2>
 
-      {comments.map((comment) => (
-        <>
-          <div className="single-container">
-            <div className="comment-header">
-              <div className="profile-pic"></div>
-              <div className="username-time">
-                <h3>{comment.username}</h3>
-                <p>{new Date(comment.created_at).toLocaleString()}</p>
+        {comments.map((comment) => (
+          <>
+            <div className="single-container">
+              <div className="comment-header">
+                <div className="profile-pic"></div>
+                <div className="username-time">
+                  <h3>{comment.username}</h3>
+                  <p>{new Date(comment.created_at).toLocaleString()}</p>
+                </div>
               </div>
+              <div className="comment" key={comment.comment_id}>
+                <p>{comment.comment_text}</p>
+              </div>
+              <hr />
             </div>
-            <div className="comment" key={comment.comment_id}>
-              <p>{comment.comment_text}</p>
-            </div>
-            <hr />
-          </div>
-        </>
-      ))}
-    </div>
+          </>
+        ))}
+      </div>
+      <div className="add-comment-container">
+        <form>
+          <label htmlFor="comment">
+            <h2>Add Comment</h2>
+          </label>
+          {/* <input type="text" name="comment" id="comment" placeholder="jee" /> */}
+          <textarea
+            name="comment"
+            id="comment"
+            placeholder="Text"
+            className="comment-textarea"
+            rows={4}
+          />
+          <button>Send</button>
+        </form>
+      </div>
+    </>
   );
 };
 

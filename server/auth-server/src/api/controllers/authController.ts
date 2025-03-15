@@ -2,12 +2,12 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import { NextFunction, Request, Response } from "express";
 import CustomError from "../../classes/CustomError";
-import { LoginResponse } from "../../../../../types/MessageTypes";
+import { LoginResponse } from "../../types/MessageTypes";
 import { getUserByUsername } from "../models/userModel";
-import { UserWithLevel, TokenContent } from "../../../../../types/EcoWDBTypes";
+import { TokenContent, User } from "../../types/EcoWDBTypes";
 
 const login = async (
-  req: Request<{}, {}, { username: string; password: string }>,
+  req: Request<object, object, { username: string; password: string }>,
   res: Response<LoginResponse>,
   next: NextFunction
 ) => {
@@ -25,17 +25,15 @@ const login = async (
       return;
     }
 
-    const outUser: Omit<UserWithLevel, "password"> = {
+    const outUser: Omit<User, "password"> = {
       user_id: user.user_id,
       username: user.username,
       email: user.email,
       created_at: user.created_at,
-      level_name: user.level_name,
     };
 
     const tokenContent: TokenContent = {
       user_id: user.user_id,
-      level_name: user.level_name,
     };
 
     const token = jwt.sign(tokenContent, process.env.JWT_SECRET);

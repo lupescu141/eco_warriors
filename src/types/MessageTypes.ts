@@ -1,4 +1,4 @@
-import { UserWithNoPassword } from "./DBTypes";
+import { UserWithNoPassword } from "./EcoWDBTypes";
 import { Posts } from "./EcoWDBTypes";
 
 type MessageResponse = {

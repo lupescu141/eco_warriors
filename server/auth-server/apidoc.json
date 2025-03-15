@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "For Metropolia Courses",
   "title": "Autentikointipalvelin",
-  "url": "/api/v1",
+  "url": "/api",
   "template": {
     "withCompare": true,
     "withGenerator": true

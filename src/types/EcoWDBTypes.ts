@@ -1,28 +1,39 @@
-export type Users = {
+export type User = {
   user_id: number;
   username: string;
   email: string;
   password: string;
-  profile_img: string;
-  user_score: number;
-  user_level: number;
   created_at: Date | string;
 };
 
-export type admin = {
+export type UserWithNoPassword = Omit<User, "password">;
+
+// check TokenContent and edit this
+export type TokenContent = Pick<User, "user_id">;
+
+// profile_img temporarily in UserStats
+export type UserStats = {
+  user_score: number;
+  user_level: number;
+  profile_img: string;
+};
+
+// Admin and EventOrganizer has no use curently
+export type Admin = {
   admin_id: number;
   username: string;
   email: string;
   password: string;
 };
 
-export type eventOrganizer = {
+export type EventOrganizer = {
   organizer_id: number;
   username: string;
   email: string;
   password: string;
 };
 
+// NO server for posting exist yeat
 export type Posts = {
   id: number;
   post_title: string;
@@ -44,6 +55,7 @@ export type Comments = {
   post_id: number;
 };
 
+// will be implemented later
 export type Top10 = {
   id: number;
   position: number;
@@ -61,20 +73,6 @@ export type MediaItemTag = {
   tag_id: number;
 };
 
-// Temporarry will delete later
-export type UserLevel = {
-  level_id: number;
-  level_name: "Admin" | "User" | "Guest";
-};
-
-export type UserWithLevel = Omit<Users, "user_level_id"> &
-  Pick<UserLevel, "level_name">;
-
-export type UserWithNoPassword = Omit<UserWithLevel, "password">;
-
-export type TokenContent = Pick<Users, "user_id"> &
-  Pick<UserLevel, "level_name">;
-
-export type MediaItemWithOwner = Posts & Pick<Users, "username">;
+export type MediaItemWithOwner = Posts & Pick<User, "username">;
 
 export type TagResult = MediaItemTag & Tag;

@@ -12,17 +12,11 @@
     "test": "jest --detectOpenHandles --forceExit",
     "apidoc": "apidoc -c apidoc.json -o public/  -t apidoc-template"
   },
-/*   "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ilkkamtk/SSSF-auth-server.git"
-  }, */
+
   "keywords": [],
   "author": "",
   "license": "MIT",
-/*   "bugs": {
-    "url": "https://github.com/ilkkamtk/SSSF-auth-server/issues"
-  }, */
-  //"homepage": "https://github.com/ilkkamtk/SSSF-auth-server#readme",
+
   "dependencies": {
     "apidoc": "^1.2.0",
     "bcryptjs": "^2.4.3",
@@ -48,7 +42,7 @@
     "@types/supertest": "^6.0.2",
     "eslint": "^9.17.0",
     "globals": "^15.14.0",
-    // "hybrid-types": "github:ilkkamtk/hybrid-types",
+
     "jest": "^29.7.0",
     "nodemon": "^3.1.9",
     "prettier": "^3.4.2",

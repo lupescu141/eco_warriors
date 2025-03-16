@@ -2,10 +2,13 @@ import { useState } from "react";
 import "./Navbar.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
-import DropdownMenu from "./DropdownMenu";
+import { DropdownMenu, DropdownMenuNotLoggedIn } from "./DropdownMenu";
 
-const Navbar = () => {
+const Navbar = (profileImg) => {
+  /* Handles the visibility of dropdown vindow */
   const [isDropdownVisible, setDropdownVisible] = useState(false);
+  /* will be replaced by user context */
+  const [isLoggedIn, setLoggedIn] = useState(false);
 
   const handleMouseEnter = () => {
     setDropdownVisible(true);
@@ -18,7 +21,7 @@ const Navbar = () => {
   return (
     <nav className="navbar" role="navigation">
       <div className="navbar-left">
-        <a href="/home" className="logo">
+        <a href="/" className="logo">
           EcoWarriors
         </a>
       </div>
@@ -37,11 +40,19 @@ const Navbar = () => {
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        <a href="/login" className="user-icon">
-          <FontAwesomeIcon icon={faCircleUser} />
-        </a>
+        {!isLoggedIn && <FontAwesomeIcon icon={faCircleUser} />}
+        {/* Image will be replaced with ProfileImg prop*/}
+        {isLoggedIn && (
+          <img
+            className="profileImg"
+            src="src\mockup_delete_on_build\shrek.jpg"
+            alt="Profile picture"
+          ></img>
+        )}
+        {/* <DropdownMenuNotLoggegIn /> */}
+        {!isLoggedIn && isDropdownVisible && <DropdownMenuNotLoggedIn />}
         {/* <DropdownMenu /> */}
-        {isDropdownVisible && <DropdownMenu />}
+        {isLoggedIn && isDropdownVisible && <DropdownMenu />}
       </div>
     </nav>
   );

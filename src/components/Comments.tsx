@@ -36,8 +36,7 @@ const comments: Comment[] = [
 //   comments: Comment[];
 // };
 
-console.log(comments);
-
+import { Fragment } from "react/jsx-runtime";
 import "../styles/Comments.css";
 
 // const Comments = ({ comments }: MockdataProps) => {
@@ -49,7 +48,7 @@ const Comments = () => {
         <h2>Comments (3)</h2>
 
         {comments.map((comment) => (
-          <>
+          <Fragment key={comment.comment_id}>
             <div className="single-container">
               <div className="comment-header">
                 <div className="profile-pic"></div>
@@ -58,12 +57,12 @@ const Comments = () => {
                   <p>{new Date(comment.created_at).toLocaleString()}</p>
                 </div>
               </div>
-              <div className="comment" key={comment.comment_id}>
+              <div className="comment">
                 <p>{comment.comment_text}</p>
               </div>
               <hr />
             </div>
-          </>
+          </Fragment>
         ))}
       </div>
       <div className="add-comment-container">

@@ -5,6 +5,7 @@ import Home from "./views/Home";
 import Posts from "./views/Posts";
 import Login from "./views/Login";
 import SinglePost from "./views/SinglePost";
+import Tasks from "./views/Tasks";
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
           <Route path="/posts" element={<Posts />} />
           <Route path="/login" element={<Login />} />
           <Route path="/single" element={<SinglePost />} />
+          <Route path="/tasks" element={<Tasks />} />
         </Route>
       </Routes>
     </Router>

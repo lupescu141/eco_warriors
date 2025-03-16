@@ -34,6 +34,9 @@ const Navbar = (profileImg) => {
           <li>
             <a href="/posts">Posts</a>
           </li>
+          <li>
+            <a href="/tasks">Tasks</a>
+          </li>
         </ul>
       </div>
       <div

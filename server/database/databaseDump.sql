@@ -90,3 +90,6 @@ CREATE TABLE `top10` (
 -- ENGINE means the data handeling engine. (Note, This is not important)
 -- CHARSET means the the used set of charachters for table content
 -- COLLATE determines the alphabetical order of table content
+
+INSERT INTO users (username, email, password) 
+  VALUES ('testi', 'testi@example.com', 'testi');

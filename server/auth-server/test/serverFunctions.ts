@@ -1,6 +1,5 @@
-/* eslint-disable node/no-unpublished-import */
-import request from 'supertest';
-import {Express} from 'express';
+import request from "supertest";
+import { Express } from "express";
 
 const getFound = (url: string | Express, path: string) => {
   return new Promise((resolve, reject) => {
@@ -30,4 +29,4 @@ const getNotFound = (url: string | Express, path: string) => {
   });
 };
 
-export {getFound, getNotFound};
+export { getFound, getNotFound };

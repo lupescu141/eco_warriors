@@ -212,6 +212,8 @@ const checkToken = async (
   res.json(message);
 };
 
+// Only used for checking email in "GET /email/:email"
+
 const checkEmailExists = async (
   req: Request<{ email: string }>,
   res: Response<{ available: boolean }>,
@@ -226,6 +228,7 @@ const checkEmailExists = async (
   }
 };
 
+// Only used for checking username in "GET /username/:username"
 const checkUsernameExists = async (
   req: Request<{ username: string }>,
   res: Response<{ available: boolean }>,

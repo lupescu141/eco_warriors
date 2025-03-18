@@ -23,6 +23,7 @@ app.use(cors());
 app.use(express.json());
 
 // serve public folder for apidoc
+// remember to redo apidoc
 app.use(express.static("public"));
 
 app.use("/api", api);

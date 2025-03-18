@@ -1,10 +1,5 @@
-/* eslint-disable node/no-unpublished-import */
 import app from "../src/app";
-import {
-  User,
-  UserWithLevel,
-  UserWithNoPassword,
-} from "../src/types/EcoWDBTypes";
+import { User, UserWithNoPassword } from "../src/types/EcoWDBTypes";
 import { getFound, getNotFound } from "./serverFunctions";
 import {
   createUser,

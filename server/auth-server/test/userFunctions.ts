@@ -1,4 +1,3 @@
-/* eslint-disable node/no-unpublished-import */
 import { Express } from "express";
 import request from "supertest";
 import { User, UserWithNoPassword } from "../src/types/EcoWDBTypes";

@@ -1,23 +1,24 @@
-import express from 'express';
-import {login} from '../controllers/authController';
+import express from "express";
+import { login } from "../controllers/authController";
 const router = express.Router();
-import {body} from 'express-validator';
-import {validationErrors} from '../../middlewares';
+import { body } from "express-validator";
+import { validationErrors } from "../../middlewares";
 
+// login route
 router.post(
-  '/login',
-  body('username')
+  "/login",
+  body("username")
     .isString()
     .trim()
     .escape()
-    .isLength({min: 3, max: 50})
-    .withMessage('Username must be between 3-50 characters'),
-  body('password')
+    .isLength({ min: 3, max: 50 })
+    .withMessage("Username must be between 3-50 characters"),
+  body("password")
     .isString()
-    .isLength({min: 5})
-    .withMessage('Password must be at least 5 characters long'),
+    .isLength({ min: 5 })
+    .withMessage("Password must be at least 5 characters long"),
   validationErrors,
-  login,
+  login
 );
 
 export default router;

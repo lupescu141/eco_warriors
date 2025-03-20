@@ -1,6 +1,7 @@
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
+import UploadModal from "./UploadModal";
 
 type Task = {
   task_id: number;
@@ -26,6 +27,9 @@ const TaskList = ({ task }: TaskProps) => {
   // set active ?
   const [active, setActive] = useState(task.active);
 
+  // show modal
+  const [showModal, setShowModal] = useState(false);
+
   // show task content when button is clicked
   const toggleTaskContent = () => {
     setDisplayContent(!displayContent);
@@ -42,6 +46,7 @@ const TaskList = ({ task }: TaskProps) => {
   };
   console.log("Aktiivinen: ", active);
   console.log("Tehty: ", completed);
+  console.log("Show modal?", showModal);
 
   return (
     <>
@@ -88,10 +93,13 @@ const TaskList = ({ task }: TaskProps) => {
               />
               Complete task
             </label>
-            {completed && <button>Upload</button>}
+            {completed && (
+              <button onClick={() => setShowModal(true)}>Upload</button>
+            )}
           </div>
         </div>
       </div>
+      {showModal && <UploadModal closeModal={() => setShowModal(false)} />}
     </>
   );
 };

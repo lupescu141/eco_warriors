@@ -1,0 +1,98 @@
+.upload-modal {
+  /* display: none; */
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.336);
+}
+
+.modal-content {
+  margin: 15% auto;
+  padding: 20px;
+  border-radius: 8px;
+  width: 80%;
+  height: 50%;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+.close {
+  float: right;
+  width: 1em;
+  height: 1em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--white);
+  border: 1px solid var(--accent-color);
+  color: black;
+}
+
+.close:hover,
+.reset:hover,
+.close:focus {
+  text-decoration: none;
+  cursor: pointer;
+  background-color: var(--accent-color);
+}
+
+.upload-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+.upload-form input,
+.upload-form textarea {
+  width: 80%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 0.5em;
+}
+.upload-form input[type="file"] {
+  padding: 0.5em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  cursor: pointer;
+}
+.upload-form input[type="file"]::file-selector-button {
+  display: none;
+}
+
+.upload-form input[type="file"]::before {
+  content: "Choose file...";
+  display: inline-block;
+  padding: 0.5em;
+  margin-right: 0.5em;
+  border-radius: 4px;
+  background-color: var(--blue);
+  color: white;
+  cursor: pointer;
+  text-align: center;
+}
+
+.upload-form input[type="file"]::file-selector-button:hover {
+  background-color: #1a6fb3;
+}
+
+.post-success-text {
+  display: inline-block;
+  color: var(--dark-green);
+  margin-left: 2em;
+}
+
+.reset {
+  margin: 1em 0;
+  height: 1em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--white);
+  border: 1px solid var(--accent-color);
+  color: black;
+}

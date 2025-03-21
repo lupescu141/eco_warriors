@@ -17,13 +17,13 @@ const DropdownMenu = () => {
             </button>
           </li>
           <li>
-            <a href="/userposts">My posts</a>
+            <button>My posts</button>
           </li>
           <li>
-            <a href="/assignments">Assignments</a>
+            <button>Assignments</button>
           </li>
           <li>
-            <a href="/logout">Logout</a>
+            <button>Logout</button>
           </li>
         </ul>
       </div>
@@ -40,5 +40,35 @@ const DropdownMenu = () => {
   );
 };
 
-export { DropdownMenu };
-// export { DropdownMenu, DropdownMenuNotLoggedIn };
+const DropdownMenuNotLoggedIn = () => {
+  const [popupType, setPopupType] = useState<"login" | "register" | null>(null);
+
+  return (
+    <>
+      <div className="dropdown-menu">
+        <ul>
+          <li>
+            <button
+              onClick={() => setPopupType("login")}
+              className="dropdown-btn"
+            >
+              Login
+            </button>
+          </li>
+        </ul>
+      </div>
+
+      {popupType && (
+        <LoginRegisterPopup
+          type={popupType}
+          onClose={() => setPopupType(null)}
+          onSwitch={() =>
+            setPopupType(popupType === "login" ? "register" : "login")
+          }
+        />
+      )}
+    </>
+  );
+};
+
+export { DropdownMenu, DropdownMenuNotLoggedIn };

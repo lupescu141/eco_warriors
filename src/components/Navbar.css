@@ -89,6 +89,10 @@
   border: none;
 }
 
+.popup-header {
+  color: black;
+}
+
 .dropdown-menu li button:hover {
   background-color: #034203;
   cursor: pointer;

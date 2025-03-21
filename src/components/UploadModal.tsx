@@ -1,6 +1,6 @@
 import "../styles/UploadModal.css";
 import { useForm } from "../hooks/formHooks";
-import { useRef, useState } from "react";
+import { ChangeEvent, useRef, useState } from "react";
 
 type UploadModalProps = {
   closeModal: () => void;
@@ -14,7 +14,15 @@ const UploadModal = ({ closeModal }: UploadModalProps) => {
     title: "",
     description: "",
   };
+
   const fileRef = useRef<HTMLInputElement>(null);
+
+  const handleFileChange = (evt: ChangeEvent<HTMLInputElement>) => {
+    if (evt.target.files) {
+      console.log(evt.target.files[0]);
+      setFile(evt.target.files[0]);
+    }
+  };
 
   // Callback placeholder useFormia varten - vaihda tää doUploadiks
   const handleFormSubmit = () => {
@@ -79,6 +87,7 @@ const UploadModal = ({ closeModal }: UploadModalProps) => {
               id="file"
               accept="image/*, video/*"
               ref={fileRef}
+              onChange={handleFileChange}
             />
             <div>
               {" "}

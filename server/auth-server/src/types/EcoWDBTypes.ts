@@ -6,6 +6,11 @@ export type User = {
   created_at: Date | string;
 };
 
+export type UserWithLevel = {
+  level_id: number;
+  level_name: "Admin" | "User" | "Guest";
+};
+
 export type UserWithNoPassword = Omit<User, "password">;
 
 // check TokenContent and edit this

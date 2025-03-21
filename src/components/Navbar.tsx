@@ -3,7 +3,7 @@ import "./Navbar.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
 // import { DropdownMenu, DropdownMenuNotLoggedIn } from "./DropdownMenu";
-import { DropdownMenu } from "./DropdownMenu";
+import { DropdownMenu, DropdownMenuNotLoggedIn } from "./DropdownMenu";
 
 const Navbar = (profileImg) => {
   /* Handles the visibility of dropdown vindow */
@@ -51,7 +51,7 @@ const Navbar = (profileImg) => {
           ></img>
         )}
         {/* <DropdownMenuNotLoggegIn /> */}
-        {/* {!isLoggedIn && isDropdownVisible && <DropdownMenuNotLoggedIn />} */}
+        {!isLoggedIn && isDropdownVisible && <DropdownMenuNotLoggedIn />}
         {/* <DropdownMenu /> */}
         {isLoggedIn && isDropdownVisible && <DropdownMenu />}
       </div>

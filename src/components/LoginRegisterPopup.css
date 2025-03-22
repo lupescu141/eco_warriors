@@ -72,3 +72,16 @@ input {
   background: blue;
   color: white;
 }
+
+.error {
+  color: red;
+  font-size: 0.85rem;
+  margin-top: 2px;
+  padding: 3px 0;
+  text-align: left;
+  width: 100%;
+  display: block;
+  background: none; /* Removes any unwanted background */
+  border-radius: 5px;
+}
+

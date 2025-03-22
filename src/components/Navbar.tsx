@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
 // import { DropdownMenu, DropdownMenuNotLoggedIn } from "./DropdownMenu";
 import { DropdownMenu, DropdownMenuNotLoggedIn } from "./DropdownMenu";
+import { Link } from "react-router-dom";
 
 const Navbar = (profileImg) => {
   /* Handles the visibility of dropdown vindow */
@@ -22,18 +23,19 @@ const Navbar = (profileImg) => {
   return (
     <nav className="navbar" role="navigation">
       <div className="navbar-left">
-        <a href="/" className="logo">
+        <Link to={"/"} className="logo">
           EcoWarriors
-        </a>
+        </Link>
       </div>
       <div className="navbar-center">
         <ul className="nav-links">
           <li>
-            <a href="/">Home</a>
+            <Link to={"/"}>Home</Link>
           </li>
           <li>
-            <a href="/posts">Posts</a>
+            <Link to={"/posts"}>Posts</Link>
           </li>
+          {/* Remove this link later */}
           <li>
             <a href="/tasks">Tasks</a>
           </li>

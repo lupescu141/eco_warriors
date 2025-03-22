@@ -1,10 +1,7 @@
 import React, { useState } from "react";
-import LoginRegisterPopup from "./LoginRegisterPopup";
 import { Link } from "react-router-dom";
 
 const DropdownMenu = () => {
-  const [popupType, setPopupType] = useState<"login" | "register" | null>(null);
-
   return (
     <>
       <div className="dropdown-menu">
@@ -26,46 +23,26 @@ const DropdownMenu = () => {
           </li>
         </ul>
       </div>
-      {popupType && (
-        <LoginRegisterPopup
-          type={popupType}
-          onClose={() => setPopupType(null)}
-          onSwitch={() =>
-            setPopupType(popupType === "login" ? "register" : "login")
-          }
-        />
-      )}
     </>
   );
 };
 
-const DropdownMenuNotLoggedIn = () => {
-  const [popupType, setPopupType] = useState<"login" | "register" | null>(null);
-
+const DropdownMenuNotLoggedIn = ({
+  stateHandler,
+}: {
+  stateHandler: () => void;
+}) => {
   return (
     <>
       <div className="dropdown-menu">
         <ul>
           <li>
-            <button
-              onClick={() => setPopupType("login")}
-              className="dropdown-btn"
-            >
+            <button onClick={stateHandler} className="dropdown-btn">
               Login
             </button>
           </li>
         </ul>
       </div>
-
-      {popupType && (
-        <LoginRegisterPopup
-          type={popupType}
-          onClose={() => setPopupType(null)}
-          onSwitch={() =>
-            setPopupType(popupType === "login" ? "register" : "login")
-          }
-        />
-      )}
     </>
   );
 };

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import LoginRegisterPopup from "./LoginRegisterPopup";
+import { Link } from "react-router-dom";
 
 const DropdownMenu = () => {
   const [popupType, setPopupType] = useState<"login" | "register" | null>(null);
@@ -9,21 +10,19 @@ const DropdownMenu = () => {
       <div className="dropdown-menu">
         <ul>
           <li>
-            <button
-              onClick={() => setPopupType("login")}
-              className="dropdown-btn"
-            >
-              Login
-            </button>
+            <Link to="/myPosts" style={{ textDecoration: "none" }}>
+              <button>My posts</button>
+            </Link>
           </li>
           <li>
-            <button>My posts</button>
+            <Link to="/myTasks" style={{ textDecoration: "none" }}>
+              <button>My tasks</button>
+            </Link>
           </li>
           <li>
-            <button>Assignments</button>
-          </li>
-          <li>
-            <button>Logout</button>
+            <Link to="/logout" style={{ textDecoration: "none" }}>
+              <button>Logout</button>
+            </Link>
           </li>
         </ul>
       </div>

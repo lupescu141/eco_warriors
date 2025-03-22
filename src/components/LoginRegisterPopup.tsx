@@ -1,5 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./LoginRegisterPopup.css";
+import { useForm } from "../hooks/formHooks";
+import { RegisterCredentials } from "../types/LocalTypes";
+import { useUser } from "../hooks/apiHooks";
 
 interface PopupProps {
   type: "login" | "register";
@@ -12,12 +15,17 @@ const LoginRegisterPopup: React.FC<PopupProps> = ({
   onClose,
   onSwitch,
 }) => {
-  const [formData, setFormData] = useState({
+  const [usernameAvailable, setUsernameAvailable] = useState(true);
+  const [emailAvailable, setEmailAvailable] = useState(true);
+  const { postRegister, getEmailAvailable, getUsernameAvailable } = useUser();
+
+  // not needed Formdata is gotten from inputs
+  /*   const [formData, setFormData] = useState({
     email: "",
     username: "",
     password: "",
     confirmPassword: "",
-  });
+  }); */
 
   const [errors, setErrors] = useState({
     email: "",
@@ -29,13 +37,15 @@ const LoginRegisterPopup: React.FC<PopupProps> = ({
   // Regex patterns for validation
   const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const usernamePattern = /^[A-Za-z]+$/;
-  const passwordPattern = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/;
+  const passwordPattern =
+    /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/;
 
+  // validation needs changes to work better with the curernt implementation
   const validateField = (name: string, value: string) => {
     let error = "";
 
-    if (value.length < 5) {
-      error = "Must be at least 5 characters long";
+    if (value.length < 3) {
+      error = "Must be at least 3 characters long";
     } else {
       switch (name) {
         case "email":
@@ -51,8 +61,7 @@ const LoginRegisterPopup: React.FC<PopupProps> = ({
               "Password must have an uppercase letter, a number, and a special character";
           break;
         case "confirmPassword":
-          if (value !== formData.password)
-            error = "Passwords do not match";
+          if (value !== inputs.password) error = "Passwords do not match";
           break;
         default:
           break;
@@ -62,16 +71,40 @@ const LoginRegisterPopup: React.FC<PopupProps> = ({
     setErrors((prevErrors) => ({ ...prevErrors, [name]: error }));
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
-
-    validateField(name, value);
+  const initValues = {
+    email: "",
+    username: "",
+    password: "",
+    confirmPassword: "",
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  // This post the registere form data
+  // form data is created by useForm as inputs
+  const doRegister = async () => {
+    try {
+      const registerResult = await postRegister(inputs as RegisterCredentials);
+      console.log("doLogin result", registerResult);
+      onClose();
+    } catch (error) {
+      console.error((error as Error).message);
+    }
+  };
 
+  const { handleSubmit, handleInputChange, inputs } = useForm(
+    doRegister,
+    initValues
+  );
+
+  // these 2 functions are not used and will be deleted if they will not be used later
+  //
+  /*   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
+    validateField(name, value);
+  }; */
+
+  /*   const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
     // Check if there are any validation errors
     const hasErrors =
       Object.values(errors).some((err) => err !== "") ||
@@ -83,8 +116,41 @@ const LoginRegisterPopup: React.FC<PopupProps> = ({
     }
 
     onClose();
-  };
+  }; */
 
+  // the useEffect functions need to be implemented better and reassesed for practicality
+  useEffect(() => {
+    const main = async () => {
+      if (inputs.username.length < 3) return;
+      const tulos = await getUsernameAvailable(inputs.username);
+      if (!tulos) return;
+      setUsernameAvailable(tulos.available as boolean);
+    };
+    if (inputs.username.length != 0) validateField("username", inputs.username);
+    main();
+  }, [inputs.username]);
+
+  useEffect(() => {
+    const main = async () => {
+      if (inputs.email.length < 5) return;
+      const tulos = await getEmailAvailable(inputs.email);
+      if (!tulos) return;
+      setEmailAvailable(tulos.available as boolean);
+    };
+    validateField("email", inputs.email);
+    main();
+  }, [inputs.email]);
+
+  useEffect(() => {
+    validateField("password", inputs.password);
+  }, [inputs.password]);
+
+  useEffect(() => {
+    validateField("confirmPassword", inputs.confirmPassword);
+  }, [inputs.confirmPassword]);
+
+  // Register works
+  // Recomend making different components for forms to enhance readability and implementation
   return (
     <div className="popup-overlay" onClick={onClose}>
       <div className="popup" onClick={(e) => e.stopPropagation()}>
@@ -101,43 +167,49 @@ const LoginRegisterPopup: React.FC<PopupProps> = ({
                 type="email"
                 name="email"
                 placeholder="Email"
-                value={formData.email}
-                onChange={handleChange}
+                /* value={formData.email} */
+                onChange={handleInputChange}
                 required
               />
-              {errors.email && <span className="error">{errors.email}</span>}
+              {errors.email && <p className="error">{errors.email}</p>}
+              {!emailAvailable && <p className="error">Email already in use</p>}
             </>
           )}
+
           <input
             type="text"
             name="username"
             placeholder="Username"
-            value={formData.username}
-            onChange={handleChange}
+            /* value={formData.username} */
+            onChange={handleInputChange}
             required
           />
-          {errors.username && <span className="error">{errors.username}</span>}
+          {errors.username && <p className="error">{errors.username}</p>}
+          {!usernameAvailable && (
+            <p className="error">Username not available</p>
+          )}
           <input
             type="password"
             name="password"
             placeholder="Password"
-            value={formData.password}
-            onChange={handleChange}
+            /* value={formData.password} */
+            onChange={handleInputChange}
             required
           />
-          {errors.password && <span className="error">{errors.password}</span>}
+          {errors.password && <p className="error">{errors.password}</p>}
+
           {type === "register" && (
             <>
               <input
                 type="password"
                 name="confirmPassword"
                 placeholder="Confirm Password"
-                value={formData.confirmPassword}
-                onChange={handleChange}
+                /* value={formData.confirmPassword} */
+                onChange={handleInputChange}
                 required
               />
               {errors.confirmPassword && (
-                <span className="error">{errors.confirmPassword}</span>
+                <p className="error">{errors.confirmPassword}</p>
               )}
             </>
           )}

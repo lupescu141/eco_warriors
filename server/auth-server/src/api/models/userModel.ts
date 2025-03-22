@@ -29,7 +29,7 @@ const getAllUsers = async (): Promise<UserWithNoPassword[]> => {
   return rows; // Return empty array if no users found
 };
 
-const getUserByEmail = async (email: string): Promise<User> => {
+const getUserByEmail = async (email: string): Promise<User | null> => {
   const [rows] = await promisePool.execute<RowDataPacket[] & User[]>(
     `SELECT user_id, username, password, email, created_at
      FROM users
@@ -37,12 +37,13 @@ const getUserByEmail = async (email: string): Promise<User> => {
     [email]
   );
   if (rows.length === 0) {
-    throw new CustomError("User not found", 404);
+    return null;
+    /* throw new CustomError("User not found", 404); */
   }
   return rows[0];
 };
 
-const getUserByUsername = async (username: string): Promise<User> => {
+const getUserByUsername = async (username: string): Promise<User | null> => {
   const [rows] = await promisePool.execute<RowDataPacket[] & User[]>(
     `SELECT user_id, username, password, email, created_at
      FROM users WHERE username = ?`,
@@ -51,7 +52,8 @@ const getUserByUsername = async (username: string): Promise<User> => {
   if (rows.length === 0) {
     // Important change error content after debugging !!!!
     // this message is returned to the user
-    throw new CustomError("User not found", 404);
+    /* throw new CustomError("User not found", 404); */
+    return null;
   }
   return rows[0];
 };

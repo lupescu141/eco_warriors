@@ -1,6 +1,10 @@
 import { fetchData } from "../lib/functions";
 import { Credentials, RegisterCredentials } from "../types/LocalTypes.ts";
-import { LoginResponse, UserResponse } from "../types/MessageTypes.ts";
+import {
+  AvailableResponse,
+  LoginResponse,
+  UserResponse,
+} from "../types/MessageTypes.ts";
 
 // AUTENTIKOINTI
 
@@ -57,6 +61,27 @@ const useUser = () => {
       options
     );
   };
-  return { postRegister, getUserByToken };
+
+  const getUsernameAvailable = async (username: string) => {
+    // fetch from endpoint /users/username/:username
+    const tulos: AvailableResponse = await fetchData(
+      import.meta.env.VITE_AUTH_API + "/users/username/" + username
+    );
+    return tulos;
+  };
+
+  const getEmailAvailable = async (email: string) => {
+    const tulos: AvailableResponse = await fetchData(
+      import.meta.env.VITE_AUTH_API + "/users/email/" + email
+    );
+    return tulos;
+  };
+
+  return {
+    postRegister,
+    getUserByToken,
+    getUsernameAvailable,
+    getEmailAvailable,
+  };
 };
 export { useUser };

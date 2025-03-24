@@ -8,7 +8,6 @@ import { Logout } from "./views/Logout";
 import SinglePost from "./views/SinglePost";
 import Tasks from "./views/Tasks";
 import { UserProvider } from "./contexts/UserContext";
-import Logout from "./components/Logout";
 
 const App = () => {
   return (

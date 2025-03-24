@@ -7,7 +7,11 @@ import { DropdownMenu, DropdownMenuNotLoggedIn } from "./DropdownMenu";
 import { Link } from "react-router-dom";
 import LoginRegisterPopup from "./LoginRegisterPopup";
 
-const Navbar = (profileImg) => {
+type NavProps = {
+  image: string;
+};
+
+const Navbar = ({ image }: NavProps) => {
   /* Handles the visibility of dropdown vindow */
   const [isDropdownVisible, setDropdownVisible] = useState(false);
   /* will be replaced by user context */
@@ -43,10 +47,6 @@ const Navbar = (profileImg) => {
             <li>
               <Link to={"/posts"}>Posts</Link>
             </li>
-            {/* Remove this link later */}
-            <li>
-              <a href="/tasks">Tasks</a>
-            </li>
           </ul>
         </div>
         <div
@@ -55,7 +55,7 @@ const Navbar = (profileImg) => {
           onMouseLeave={handleMouseLeave}
         >
           {!isLoggedIn && <FontAwesomeIcon icon={faCircleUser} />}
-          {/* Image will be replaced with ProfileImg prop*/}
+          {/* Image will be replaced with image prop*/}
           {isLoggedIn && (
             <img
               className="profileImg"

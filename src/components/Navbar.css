@@ -67,6 +67,7 @@
   transition: all linear 0.1s;
   position: absolute;
   top: 5.4rem;
+  z-index: 999;
 }
 
 .dropdown-menu ul {

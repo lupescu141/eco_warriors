@@ -30,24 +30,34 @@ const mockdata: Post[] = [
     created_at: "16:0 1.2.2025",
     user_id: 2,
   },
+  {
+    post_id: 3,
+    username: "Mart77",
+    title: "Plastic waste is bad!",
+    description: "lorem",
+    post_image: "kuva.jpg",
+    created_at: "10:30 20.2.2025",
+    user_id: 1,
+  },
 ];
 
-const Posts = () => {
+const MyPostsView = () => {
   return (
     <>
       <div
         className="posts-header-container
       "
       >
-        <h1>Posts</h1>
-        <div>Searchbar placeholder</div>
+        <h1>My Posts</h1>\
       </div>
       <hr style={{ width: "90vw", margin: "auto" }} />
 
-      {mockdata.map((post) => (
-        <AllPosts key={post.post_id} mockdata={post} />
-      ))}
+      {mockdata.map(
+        (post) =>
+          // placeholder for mapping post by user
+          post.user_id === 1 && <AllPosts key={post.post_id} mockdata={post} />
+      )}
     </>
   );
 };
-export default Posts;
+export default MyPostsView;

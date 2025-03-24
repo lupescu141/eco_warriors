@@ -4,6 +4,7 @@ import { Route, BrowserRouter as Router, Routes } from "react-router";
 import Layout from "./views/Layout";
 import Home from "./views/Home";
 import Posts from "./views/Posts";
+import MyPostsView from "./views/MyPostsView";
 import { Logout } from "./views/Logout";
 import SinglePost from "./views/SinglePost";
 import Tasks from "./views/Tasks";
@@ -20,6 +21,7 @@ const App = () => {
             <Route path="/single" element={<SinglePost />} />
             <Route path="/myTasks" element={<Tasks />} />
             <Route path="/logout" element={<Logout />} />
+            <Route path="/myposts" element={<MyPostsView />} />
           </Route>
         </Routes>
       </UserProvider>

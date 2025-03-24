@@ -110,6 +110,7 @@ const LoginRegisterPopup: React.FC<PopupProps> = ({
       password: inputs.password,
     };
     handleLogin(inputLogin);
+    onClose();
   };
 
   const pointer = type === "register" ? doRegister : doLogin;

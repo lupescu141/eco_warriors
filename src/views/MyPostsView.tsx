@@ -48,7 +48,7 @@ const MyPostsView = () => {
         className="posts-header-container
       "
       >
-        <h1>My Posts</h1>\
+        <h1>My Posts</h1>
       </div>
       <hr style={{ width: "90vw", margin: "auto" }} />
 

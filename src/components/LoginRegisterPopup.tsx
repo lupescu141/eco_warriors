@@ -3,6 +3,7 @@ import "./LoginRegisterPopup.css";
 import { useForm } from "../hooks/formHooks";
 import { RegisterCredentials } from "../types/LocalTypes";
 import { useUser } from "../hooks/apiHooks";
+import { useUserContext } from "../hooks/contextHooks";
 
 interface PopupProps {
   type: "login" | "register";
@@ -15,6 +16,7 @@ const LoginRegisterPopup: React.FC<PopupProps> = ({
   onClose,
   onSwitch,
 }) => {
+  const { handleLogin } = useUserContext();
   const [usernameAvailable, setUsernameAvailable] = useState(true);
   const [emailAvailable, setEmailAvailable] = useState(true);
   const { postRegister, getEmailAvailable, getUsernameAvailable } = useUser();
@@ -82,41 +84,39 @@ const LoginRegisterPopup: React.FC<PopupProps> = ({
   // form data is created by useForm as inputs
   const doRegister = async () => {
     try {
-      const registerResult = await postRegister(inputs as RegisterCredentials);
+      const inputRegister = {
+        username: inputs.username,
+        password: inputs.password,
+        email: inputs.email,
+      };
+      const registerResult = await postRegister(
+        inputRegister as RegisterCredentials
+      );
       console.log("doLogin result", registerResult);
+      const inputLogin = {
+        username: inputs.username,
+        password: inputs.password,
+      };
+      handleLogin(inputLogin);
       onClose();
     } catch (error) {
       console.error((error as Error).message);
     }
   };
 
+  const doLogin = async () => {
+    const inputLogin = {
+      username: inputs.username,
+      password: inputs.password,
+    };
+    handleLogin(inputLogin);
+  };
+
+  const pointer = type === "register" ? doRegister : doLogin;
   const { handleSubmit, handleInputChange, inputs } = useForm(
-    doRegister,
+    pointer,
     initValues
   );
-
-  // these 2 functions are not used and will be deleted if they will not be used later
-  //
-  /*   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
-    validateField(name, value);
-  }; */
-
-  /*   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Check if there are any validation errors
-    const hasErrors =
-      Object.values(errors).some((err) => err !== "") ||
-      Object.values(formData).some((val) => val.length < 5);
-
-    if (hasErrors) {
-      alert("Please fix the errors before submitting");
-      return;
-    }
-
-    onClose();
-  }; */
 
   // the useEffect functions need to be implemented better and reassesed for practicality
   useEffect(() => {

@@ -7,6 +7,7 @@ type Post = {
   description: string;
   post_image: string;
   created_at: string;
+  user_id: number;
 };
 
 const mockdata: Post[] = [
@@ -17,6 +18,7 @@ const mockdata: Post[] = [
     description: "lorem",
     post_image: "kuva.jpg",
     created_at: "10:30 20.2.2025",
+    user_id: 1,
   },
   {
     post_id: 2,
@@ -25,6 +27,16 @@ const mockdata: Post[] = [
     description: "How to reduce biowaste?",
     post_image: "kuva.jpg",
     created_at: "16:0 1.2.2025",
+    user_id: 2,
+  },
+  {
+    post_id: 3,
+    username: "Mart77",
+    title: "Plastic waste is bad!",
+    description: "lorem",
+    post_image: "kuva.jpg",
+    created_at: "10:30 20.2.2025",
+    user_id: 1,
   },
 ];
 

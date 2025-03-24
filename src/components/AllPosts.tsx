@@ -1,13 +1,6 @@
 import { Link } from "react-router-dom";
+import { Post } from "../mockdata/mockdata";
 
-type Post = {
-  post_id: number;
-  username: string;
-  title: string;
-  description: string;
-  post_image: string;
-  created_at: string;
-};
 type MockdataProps = {
   mockdata: Post;
 };

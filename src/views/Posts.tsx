@@ -3,6 +3,7 @@ import { mockdata } from "../mockdata/mockdata";
 import "../styles/Posts.css";
 
 const Posts = () => {
+  console.log(mockdata);
   return (
     <>
       <div

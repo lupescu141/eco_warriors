@@ -1,5 +1,6 @@
 import "./App.css";
 import "./styles/Root.css";
+import "./styles/NewestPost.css";
 import { Route, BrowserRouter as Router, Routes } from "react-router";
 import Layout from "./views/Layout";
 import Home from "./views/Home";

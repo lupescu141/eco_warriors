@@ -7,6 +7,7 @@ import Posts from "./views/Posts";
 import SinglePost from "./views/SinglePost";
 import Tasks from "./views/Tasks";
 import { UserProvider } from "./contexts/UserContext";
+import Logout from "./components/Logout";
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
             <Route path="/posts" element={<Posts />} />
             <Route path="/single" element={<SinglePost />} />
             <Route path="/myTasks" element={<Tasks />} />
+            <Route path="/logout" element={<Logout />} />
           </Route>
         </Routes>
       </UserProvider>

@@ -6,27 +6,31 @@ import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
 import { DropdownMenu, DropdownMenuNotLoggedIn } from "./DropdownMenu";
 import { Link } from "react-router-dom";
 import LoginRegisterPopup from "./LoginRegisterPopup";
+import { useUserContext } from "../hooks/contextHooks";
 
 type NavProps = {
   image: string;
 };
 
 const Navbar = ({ image }: NavProps) => {
+  /* used for checking if user is logged in */
+  const { user } = useUserContext();
   /* Handles the visibility of dropdown vindow */
   const [isDropdownVisible, setDropdownVisible] = useState(false);
-  /* will be replaced by user context */
-  const [isLoggedIn, setLoggedIn] = useState(false);
   /* Modal state*/
   const [popupType, setPopupType] = useState<"login" | "register" | null>(null);
 
+  /* Sets modal to visible */
   const handleMouseEnter = () => {
     setDropdownVisible(true);
   };
 
+  /* Sets modal to invisible */
   const handleMouseLeave = () => {
     setDropdownVisible(false);
   };
 
+  /* Opens login modal */
   const handlePopupType = () => {
     setPopupType("login");
   };
@@ -54,9 +58,10 @@ const Navbar = ({ image }: NavProps) => {
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >
-          {!isLoggedIn && <FontAwesomeIcon icon={faCircleUser} />}
+          {/* User icon on nav right side*/}
+          {!user && <FontAwesomeIcon icon={faCircleUser} />}
           {/* Image will be replaced with image prop*/}
-          {isLoggedIn && (
+          {user && (
             <img
               className="profileImg"
               src="src\mockup_delete_on_build\shrek.jpg"
@@ -64,11 +69,11 @@ const Navbar = ({ image }: NavProps) => {
             ></img>
           )}
           {/* <DropdownMenuNotLoggegIn /> */}
-          {!isLoggedIn && isDropdownVisible && (
+          {!user && isDropdownVisible && (
             <DropdownMenuNotLoggedIn stateHandler={handlePopupType} />
           )}
           {/* <DropdownMenu /> */}
-          {isLoggedIn && isDropdownVisible && <DropdownMenu />}
+          {user && isDropdownVisible && <DropdownMenu />}
         </div>
       </nav>
       {popupType && (

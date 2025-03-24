@@ -4,6 +4,7 @@ import { Route, BrowserRouter as Router, Routes } from "react-router";
 import Layout from "./views/Layout";
 import Home from "./views/Home";
 import Posts from "./views/Posts";
+import { Logout } from "./views/Logout";
 import SinglePost from "./views/SinglePost";
 import Tasks from "./views/Tasks";
 import { UserProvider } from "./contexts/UserContext";

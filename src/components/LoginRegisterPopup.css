@@ -48,7 +48,7 @@ form {
 }
 
 input {
-  margin: 10px 0;
+  margin: 0px 0;
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -76,7 +76,8 @@ input {
 .error {
   color: red;
   font-size: 0.85rem;
-  margin-top: 2px;
+  margin-bottom: 10px;
+  height: 16px;
   padding: 3px 0;
   text-align: left;
   width: 100%;
@@ -85,3 +86,40 @@ input {
   border-radius: 5px;
 }
 
+.fade-in {
+  opacity: 1;
+  animation-name: fadeInOpacity;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in;
+  animation-duration: 1s;
+}
+
+@keyframes fadeInOpacity {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.fade-out {
+  opacity: 1;
+  animation-name: fadeInOpacity;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in;
+  animation-duration: 1s;
+}
+
+@keyframes fadeOutOpacity {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.display_hide {
+  visibility: hidden;
+}

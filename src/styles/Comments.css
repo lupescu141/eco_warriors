@@ -40,11 +40,12 @@ hr {
   padding: 0.5rem;
 }
 
-input[type="text"] {
+/* poista */
+/* input[type="text"] {
   margin: 1rem 0;
   padding: 0.5em;
   width: 70%;
-}
+} */
 .comment-textarea {
   margin: 1em 0;
   padding: 1em;

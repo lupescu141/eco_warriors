@@ -28,7 +28,11 @@ const UploadModal = ({ closeModal }: UploadModalProps) => {
   const handleFormSubmit = () => {
     setUploading(true);
     console.log("Form submitted with values:", inputs, file);
-    closeModal();
+
+    setTimeout(() => {
+      // resetForm();
+      closeModal();
+    }, 3000);
   };
 
   const { handleSubmit, handleInputChange, inputs, setInputs } = useForm(

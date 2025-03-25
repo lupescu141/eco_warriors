@@ -5,7 +5,9 @@
   align-items: center;
   background-color: #045f04;
   color: #fff;
-  box-shadow: 0px 0px 7px 3px black;
+  box-shadow: 0px 0px 7px 3px rgb(34, 34, 34);
+  z-index: 2;
+  position: sticky;
 }
 
 .navbar-left .logo {

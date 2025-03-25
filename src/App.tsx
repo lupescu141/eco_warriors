@@ -10,6 +10,7 @@ import { Logout } from "./views/Logout";
 import SinglePost from "./views/SinglePost";
 import Tasks from "./views/Tasks";
 import { UserProvider } from "./contexts/UserContext";
+import { Profile } from "./views/Profile";
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
             <Route path="/myTasks" element={<Tasks />} />
             <Route path="/logout" element={<Logout />} />
             <Route path="/myposts" element={<MyPostsView />} />
+            <Route path="/profile" element={<Profile />} />
           </Route>
         </Routes>
       </UserProvider>

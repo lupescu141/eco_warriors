@@ -7,11 +7,11 @@ import Comments from "../components/Comments";
 import { Post } from "../mockdata/mockdata";
 
 const SinglePost = () => {
-  const location = useLocation();
-  const { item }: { item: Post } = location.state || {};
   const navigate: NavigateFunction = useNavigate();
+  const { state } = useLocation();
+  const item: Post = state.item;
 
-  console.log("löytyykä", item);
+  // console.log("löytyykä", item);
   if (!item) {
     return <div>Error!</div>;
   }
@@ -21,7 +21,6 @@ const SinglePost = () => {
       <div className="posts-header-container">
         <h1>Posts</h1>
         <h2>{item.title}</h2>
-        {/* {item.title} */}
       </div>
       <hr style={{ width: "90vw", margin: "auto", backgroundColor: "red" }} />
       <div className="single-post-container">
@@ -31,12 +30,12 @@ const SinglePost = () => {
         <h2>{item.title}</h2>
         <div className="datetime-user-container">
           <div className="datetime-user">
-            <FontAwesomeIcon icon={faClock} className="icon" />
-            <p>{item.created_at}</p>
-          </div>
-          <div className="datetime-user">
             <FontAwesomeIcon icon={faCircleUser} className="icon" />{" "}
             {item.username}
+          </div>
+          <div className="datetime-user">
+            <FontAwesomeIcon icon={faClock} className="icon" />
+            <p>{item.created_at}</p>
           </div>
         </div>
         <p>{item.description}</p>
@@ -46,6 +45,7 @@ const SinglePost = () => {
           <span>Recycling</span>
           <span>Eco-friendly</span>
         </div>
+
         <button onClick={() => navigate(-1)}>Go back</button>
 
         {/* COMMENTS */}

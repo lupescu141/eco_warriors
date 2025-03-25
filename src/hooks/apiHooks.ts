@@ -43,7 +43,7 @@ const useUser = () => {
     };
     console.log(credentials);
     try {
-      return await fetchData<UserResponse>(
+      return await fetchData<LoginResponse>(
         import.meta.env.VITE_AUTH_API + "/users",
         options
       );

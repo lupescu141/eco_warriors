@@ -51,9 +51,6 @@ const Navbar = ({ image }: NavProps) => {
             <li>
               <Link to={"/posts"}>Posts</Link>
             </li>
-            <li>
-              <Link to={"/myposts"}>My Posts</Link>
-            </li>
           </ul>
         </div>
         <div
@@ -72,11 +69,11 @@ const Navbar = ({ image }: NavProps) => {
             ></img>
           )}
           {/* <DropdownMenuNotLoggegIn /> */}
-          {user && isDropdownVisible && (
+          {!user && isDropdownVisible && (
             <DropdownMenuNotLoggedIn stateHandler={handlePopupType} />
           )}
           {/* <DropdownMenu /> */}
-          {!user && isDropdownVisible && <DropdownMenu />}
+          {user && isDropdownVisible && <DropdownMenu />}
         </div>
       </nav>
       {popupType && (

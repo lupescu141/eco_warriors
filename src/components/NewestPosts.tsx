@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { mockdata } from "../mockdata/mockdata";
 
 const NewestPosts = () => {
@@ -16,17 +17,19 @@ const NewestPosts = () => {
       <div className="newest-post-container">
         {newestPosts.map((post) => (
           <div key={post.post_id} className="card-container">
-            <img
-              src={
-                "https://placehold.co/200x100@2x/light-grey/white/png?text=IMG"
-              }
-              alt={post.title}
-            ></img>
-            <div className="text-container">
-              <h4>{post.title}</h4>
-              <p>{post.username}</p>
-              <p>{post.created_at}</p>
-            </div>
+            <Link to="/single" className="np-link" state={{ item: post }}>
+              <img
+                src={
+                  "https://placehold.co/200x100@2x/light-grey/white/png?text=IMG"
+                }
+                alt={post.title}
+              ></img>
+              <div className="text-container">
+                <h4>{post.title}</h4>
+                <p>{post.username}</p>
+                <p>{post.created_at}</p>
+              </div>
+            </Link>
           </div>
         ))}
       </div>

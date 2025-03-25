@@ -42,3 +42,11 @@
   font-size: 1em;
   margin: 5px 0;
 }
+.np-link {
+  text-decoration: none;
+  color: #1f1f1f;
+}
+
+.np-link:visited {
+  text-decoration: none;
+}

@@ -4,34 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "../styles/Posts.css";
 import { faCircleUser, faClock } from "@fortawesome/free-solid-svg-icons";
 import Comments from "../components/Comments";
-
-type Post = {
-  post_id: number;
-  username: string;
-  title: string;
-  description: string;
-  post_image: string;
-  created_at: string;
-};
-
-// const mockdata: Post[] = [
-//   {
-//     post_id: 1,
-//     username: "Mart77",
-//     title: "Why to recycle",
-//     description: "lorem",
-//     post_image: "kuva.jpg",
-//     created_at: "10:30 20.2.2025",
-//   },
-//   {
-//     post_id: 2,
-//     username: "Pekka",
-//     title: "Biowaste",
-//     description: "lorem",
-//     post_image: "kuva.jpg",
-//     created_at: "16:0 1.2.2025",
-//   },
-// ];
+import { Post } from "../mockdata/mockdata";
 
 const SinglePost = () => {
   const location = useLocation();

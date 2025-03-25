@@ -15,7 +15,10 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const location = useLocation();
 
   // login, logout and autologin functions are here instead of components
-  const handleLogin = async (credentials: Credentials) => {
+  const handleLogin = async (
+    credentials: Credentials,
+    callback: () => void
+  ) => {
     try {
       // post login credentials to API
       const loginResult = await postLogin(credentials);
@@ -26,8 +29,8 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
       }
       // set user to state
       setUser(loginResult.user);
-      // navigate to home
-      navigate("/");
+      // close modal
+      callback();
     } catch (e) {
       console.log((e as Error).message);
     }

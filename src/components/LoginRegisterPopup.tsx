@@ -17,17 +17,11 @@ const LoginRegisterPopup: React.FC<PopupProps> = ({
   onSwitch,
 }) => {
   const { handleLogin } = useUserContext();
+  /*   
   const [usernameAvailable, setUsernameAvailable] = useState(true);
-  const [emailAvailable, setEmailAvailable] = useState(true);
+  const [emailAvailable, setEmailAvailable] = useState(true); 
+  */
   const { postRegister, getEmailAvailable, getUsernameAvailable } = useUser();
-
-  // not needed Formdata is gotten from inputs
-  /*   const [formData, setFormData] = useState({
-    email: "",
-    username: "",
-    password: "",
-    confirmPassword: "",
-  }); */
 
   const [errors, setErrors] = useState({
     email: "",
@@ -41,37 +35,6 @@ const LoginRegisterPopup: React.FC<PopupProps> = ({
   const usernamePattern = /^[A-Za-z]+$/;
   const passwordPattern =
     /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/;
-
-  // validation needs changes to work better with the curernt implementation
-  const validateField = (name: string, value: string) => {
-    let error = "";
-
-    if (value.length < 3) {
-      error = "Must be at least 3 characters long";
-    } else {
-      switch (name) {
-        case "email":
-          if (!emailPattern.test(value)) error = "Invalid email format";
-          break;
-        case "username":
-          if (!usernamePattern.test(value))
-            error = "Username can only contain letters (A-Z, a-z)";
-          break;
-        case "password":
-          if (!passwordPattern.test(value))
-            error =
-              "Password must have an uppercase letter, a number, and a special character";
-          break;
-        case "confirmPassword":
-          if (value !== inputs.password) error = "Passwords do not match";
-          break;
-        default:
-          break;
-      }
-    }
-
-    setErrors((prevErrors) => ({ ...prevErrors, [name]: error }));
-  };
 
   const initValues = {
     email: "",
@@ -97,8 +60,7 @@ const LoginRegisterPopup: React.FC<PopupProps> = ({
         username: inputs.username,
         password: inputs.password,
       };
-      handleLogin(inputLogin);
-      onClose();
+      handleLogin(inputLogin, onClose);
     } catch (error) {
       console.error((error as Error).message);
     }
@@ -109,48 +71,93 @@ const LoginRegisterPopup: React.FC<PopupProps> = ({
       username: inputs.username,
       password: inputs.password,
     };
-    handleLogin(inputLogin);
-    onClose();
+    handleLogin(inputLogin, onClose);
   };
 
+  // a cursed way to swithc callback function pointer
   const pointer = type === "register" ? doRegister : doLogin;
   const { handleSubmit, handleInputChange, inputs } = useForm(
     pointer,
     initValues
   );
 
-  // the useEffect functions need to be implemented better and reassesed for practicality
+  //
+  // checks username regex and availability
   useEffect(() => {
-    const main = async () => {
-      if (inputs.username.length < 3) return;
-      const tulos = await getUsernameAvailable(inputs.username);
-      if (!tulos) return;
-      setUsernameAvailable(tulos.available as boolean);
-    };
-    if (inputs.username.length != 0) validateField("username", inputs.username);
-    main();
+    const timeout = setTimeout(async () => {
+      let error = "";
+      if (inputs.username.length == 0) {
+        error = "";
+      } else if (inputs.username.length < 3) {
+        error = "Must be at least 3 characters long";
+      } else if (usernamePattern.test(inputs.username)) {
+        const tulos = await getUsernameAvailable(inputs.username);
+        /* setUsernameAvailable(tulos.available as boolean); */
+        if (!tulos.available) error = "Username not available";
+      } else {
+        error = "Username can only contain letters (A-Z, a-z)";
+      }
+      setErrors((prevErrors) => ({ ...prevErrors, ["username"]: error }));
+    }, 500);
+    return () => clearTimeout(timeout);
   }, [inputs.username]);
 
+  //
+  // Checks email regex and availability
   useEffect(() => {
-    const main = async () => {
-      if (inputs.email.length < 5) return;
-      const tulos = await getEmailAvailable(inputs.email);
-      if (!tulos) return;
-      setEmailAvailable(tulos.available as boolean);
-    };
-    validateField("email", inputs.email);
-    main();
+    const timeout = setTimeout(async () => {
+      let error = "";
+      if (inputs.email.length == 0) {
+        error = "";
+      } else if (inputs.email.length < 3) {
+        error = "Must be at least 3 characters long";
+      } else if (emailPattern.test(inputs.email)) {
+        const tulos = await getEmailAvailable(inputs.email);
+        /* setEmailAvailable(tulos.available as boolean); */
+        if (!tulos.available) error = "Email not available";
+      } else {
+        error = "Invalid email format";
+      }
+      setErrors((prevErrors) => ({ ...prevErrors, ["email"]: error }));
+    }, 500);
+    return () => clearTimeout(timeout);
   }, [inputs.email]);
 
+  //
+  // Checks password regex
   useEffect(() => {
-    validateField("password", inputs.password);
+    const timeout = setTimeout(async () => {
+      let error = "";
+      if (inputs.password.length == 0) {
+        error = "";
+      } else if (inputs.password.length < 3) {
+        error = "Must be at least 3 characters long";
+      } else if (!passwordPattern.test(inputs.password))
+        error =
+          "Password must have an uppercase letter, a number, and a special character";
+      setErrors((prevErrors) => ({ ...prevErrors, ["password"]: error }));
+    }, 500);
+    return () => clearTimeout(timeout);
   }, [inputs.password]);
 
+  //
+  // Checks confirmPassword
   useEffect(() => {
-    validateField("confirmPassword", inputs.confirmPassword);
+    const timeout = setTimeout(async () => {
+      let error = "";
+      if (inputs.confirmPassword.length == 0) {
+        error = "";
+      } else if (inputs.confirmPassword !== inputs.password)
+        error = "Passwords do not match";
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        ["confirmPassword"]: error,
+      }));
+    }, 500);
+    return () => clearTimeout(timeout);
   }, [inputs.confirmPassword]);
 
-  // Register works
+  //
   // Recomend making different components for forms to enhance readability and implementation
   return (
     <div className="popup-overlay" onClick={onClose}>
@@ -168,36 +175,28 @@ const LoginRegisterPopup: React.FC<PopupProps> = ({
                 type="email"
                 name="email"
                 placeholder="Email"
-                /* value={formData.email} */
                 onChange={handleInputChange}
                 required
               />
-              {errors.email && <p className="error">{errors.email}</p>}
-              {!emailAvailable && <p className="error">Email already in use</p>}
+              {<p className="error">{errors.email}</p>}
             </>
           )}
-
           <input
             type="text"
             name="username"
             placeholder="Username"
-            /* value={formData.username} */
             onChange={handleInputChange}
             required
           />
-          {errors.username && <p className="error">{errors.username}</p>}
-          {!usernameAvailable && (
-            <p className="error">Username not available</p>
-          )}
+          {<p className="error">{errors.username}</p>}
           <input
             type="password"
             name="password"
             placeholder="Password"
-            /* value={formData.password} */
             onChange={handleInputChange}
             required
           />
-          {errors.password && <p className="error">{errors.password}</p>}
+          {<p className="error">{errors.password}</p>}
 
           {type === "register" && (
             <>
@@ -205,13 +204,10 @@ const LoginRegisterPopup: React.FC<PopupProps> = ({
                 type="password"
                 name="confirmPassword"
                 placeholder="Confirm Password"
-                /* value={formData.confirmPassword} */
                 onChange={handleInputChange}
                 required
               />
-              {errors.confirmPassword && (
-                <p className="error">{errors.confirmPassword}</p>
-              )}
+              {<p className="error">{errors.confirmPassword}</p>}
             </>
           )}
           <button type="submit" className="submit-btn">

@@ -87,9 +87,75 @@ CREATE TABLE `top10` (
   FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
+-- Added TASKS
+
+CREATE TABLE `tasks`(
+  `task_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `task_title` VARCHAR(100) NOT NULL,
+  `task_description` VARCHAR(1000) NOT NULL,
+  -- `completed` BOOLEAN,
+  -- `active` BOOLEAN,
+  -- `points` INT(11) NOT NULL,
+  -- `level` INT NOT NULL CHECK (level BETWEEN 1 AND 3),
+  `user_id` INT(11) DEFAULT NULL,
+  PRIMARY KEY(`task_id`),
+  FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- TASK w User liitäntätaulukko WIP
+
+CREATE TABLE `user_task` (
+  `task_id` INT NOT NULL,
+  `user_id` INT NOT NULL,
+  `completed` BOOLEAN,
+  `active` BOOLEAN,
+  `points` INT(11) NOT NULL,
+  `level` INT NOT NULL CHECK (level BETWEEN 1 AND 3),
+  PRIMARY KEY (user_id, task_id),
+  FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+  FOREIGN KEY (task_id) REFERENCES tasks(task_id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+
 -- ENGINE means the data handeling engine. (Note, This is not important)
 -- CHARSET means the the used set of charachters for table content
 -- COLLATE determines the alphabetical order of table content
 
-INSERT INTO users (username, email, password) 
-  VALUES ('testi', 'testi@example.com', 'testi');
+-- TESTS
+
+INSERT INTO users (user_id, username, email, password) 
+  VALUES 
+  (1, 'testi', 'testi@example.com', 'testi'),
+  (2, 'oppilas', 'o@example.com', 'salasana123');
+
+-- Test User with task
+
+-- INSERT INTO tasks (task_title, task_description, completed, active, points, level, user_id) 
+-- VALUES 
+--   ('Kerää roskia', 'Kerää roskia puistosta ja lajittele asianmukaisesti', FALSE, TRUE, 50, 1, 1),
+--   ('Säästä sähköä tunnin ajan', 'Laita sähkölaitteet kiinni tunniksi', FALSE, FALSE, 50, 2, 1);
+
+INSERT INTO tasks (task_id, task_title, task_description, user_id) 
+VALUES 
+  (1, 'Siivoa puisto', 'Puhdista ja siisti lähialueen puisto.', 1),
+  (2, 'Lajittele roskat', 'Lajittele kierrätykseen menevät roskat oikein.', 1),
+  (3, 'Osallistua tapahtumaan', 'Osallistu ympäristötapahtumaan ja auta sen järjestämisessä.', 2);
+
+INSERT INTO user_task (user_id, task_id, completed, active, points, level)
+VALUES 
+  (1, 1, TRUE, TRUE, 10, 2),
+  (1, 2, FALSE, TRUE, 5, 1),
+  (2, 3, TRUE, TRUE, 20, 3);
+
+
+SELECT 
+  users.username, 
+  tasks.task_title, 
+  tasks.task_description, 
+  user_task.completed, 
+  user_task.active, 
+  user_task.points, 
+  user_task.level
+FROM user_task
+JOIN users ON user_task.user_id = users.user_id
+JOIN tasks ON user_task.task_id = tasks.task_id;

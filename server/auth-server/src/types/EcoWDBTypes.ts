@@ -81,3 +81,19 @@ export type MediaItemTag = {
 export type MediaItemWithOwner = Posts & Pick<User, "username">;
 
 export type TagResult = MediaItemTag & Tag;
+
+// tasks
+
+export type Tasks = {
+  task_id: number;
+  task_title: string;
+  task_description: string;
+  points: number;
+  level: number;
+  active: boolean;
+  completed: boolean;
+  user_id: number;
+};
+
+// tsekkaa tarviiko
+export type TaskWithOwner = Tasks & Pick<User, "username">;

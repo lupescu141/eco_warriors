@@ -1,4 +1,4 @@
-import { User, UserWithNoPassword } from "../types/EcoWDBTypes.ts";
+import { User, UserWithNoPassword } from "./EcoWDBTypes.ts";
 
 type Credentials = Pick<User, "username" | "password">;
 type RegisterCredentials = Pick<User, "username" | "password" | "email">;

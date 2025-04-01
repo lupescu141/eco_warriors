@@ -56,6 +56,12 @@
   justify-content: center;
   align-items: center;
   border-radius: 1rem;
+  background-color: var(--white);
+  border: var(--light-green) 1px solid;
+  color: var(--dark);
+}
+.toggle-content-btn:hover {
+  background-color: var(--light-green);
 }
 .task-content-wrapper {
   max-height: 0;

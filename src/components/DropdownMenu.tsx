@@ -12,7 +12,7 @@ const DropdownMenu = () => {
           </li>
           <li>
             <Link to="/myTasks" style={{ textDecoration: "none" }}>
-              <button>My tasks</button>
+              <button>Monthly Tasks</button>
             </Link>
           </li>
           <li>

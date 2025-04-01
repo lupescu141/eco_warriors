@@ -6,3 +6,12 @@
   --white: #f7f7f7;
   color: #1f1f1f;
 }
+.scroll-to-top-btn {
+  background-color: var(--light-green) !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.scroll-to-top-btn:hover {
+  background-color: var(--dark-green) !important;
+}

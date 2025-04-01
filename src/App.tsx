@@ -10,10 +10,22 @@ import { Logout } from "./views/Logout";
 import SinglePost from "./views/SinglePost";
 import Tasks from "./views/Tasks";
 import { UserProvider } from "./contexts/UserContext";
+import ScrollToTop from "react-scroll-to-top";
+import { ShowFromTop } from "./components/ShowFromTop";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronUp } from "@fortawesome/free-solid-svg-icons";
+<FontAwesomeIcon icon={faChevronUp} />;
 
 const App = () => {
   return (
     <Router>
+      <ShowFromTop />
+      <ScrollToTop
+        smooth
+        color="#fff"
+        component={<FontAwesomeIcon icon={faChevronUp} />}
+        className="scroll-to-top-btn"
+      />
       <UserProvider>
         <Routes>
           <Route element={<Layout />}>

@@ -101,7 +101,7 @@ const usePost = () => {
       try {
         // kaikki mediat ilman omistajan tietoja
         const media = await fetchData<FullPost[]>(
-          import.meta.env.VITE_MEDIA_API + "/media"
+          import.meta.env.VITE_MEDIA_API + "/post"
         );
         // haetaan omistajat id:n perusteella
         const mediaWithOwner: MediaItemWithOwner[] = await Promise.all(

@@ -6,10 +6,10 @@ export type User = {
   created_at: Date | string;
 };
 
-export type UserWithNoPassword = Omit<User, 'password'>;
+export type UserWithNoPassword = Omit<User, "password">;
 
 // check TokenContent and edit this
-export type TokenContent = Pick<User, 'user_id'>;
+export type TokenContent = Pick<User, "user_id">;
 
 // profile_img temporarily in UserStats
 export type UserStats = {
@@ -35,7 +35,7 @@ export type EventOrganizer = {
 
 // NO server for posting exist yeat
 export type Posts = {
-  id: number;
+  post_id: number;
   user_id: number;
   post_title: string;
   post_description: string;
@@ -44,18 +44,18 @@ export type Posts = {
 };
 
 export type PostMedia = {
-  id: number;
+  file_id: number;
   filename: string;
   post_id: number;
   filesize: number;
   thumbnail: string;
-  type: string;
+  filetype: string;
 };
 
-export type FullPost = Posts & PostMedia;
+export type FullPost = Posts & Omit<PostMedia, "post_id">;
 
 export type Comments = {
-  id: number;
+  comment_id: number;
   user_id: string;
   comment: string;
   post_id: number;
@@ -80,7 +80,7 @@ export type PostItemTag = {
   tag_id: number;
 };
 
-export type MediaItemWithOwner = Posts & Pick<User, 'username'>;
+export type MediaItemWithOwner = Posts & Pick<User, "username">;
 
 export type TagResult = PostItemTag & Tag;
 

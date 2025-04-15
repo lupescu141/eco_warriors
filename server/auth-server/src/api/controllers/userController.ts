@@ -3,7 +3,7 @@
 import { NextFunction, Request, Response } from "express";
 import CustomError from "../../classes/CustomError";
 import bcrypt from "bcryptjs";
-import { UserDeleteResponse, UserResponse } from "../../types/MessageTypes";
+import { UserDeleteResponse, UserResponse } from "ecwtypes/MessageTypes";
 import {
   createUser,
   deleteUser,
@@ -13,11 +13,7 @@ import {
   getUserByUsername,
   modifyUser,
 } from "../models/userModel";
-import {
-  TokenContent,
-  User,
-  UserWithNoPassword,
-} from "../../types/EcoWDBTypes";
+import { TokenContent, User, UserWithNoPassword } from "ecwtypes/EcoWDBTypes";
 
 //////
 // TODO: check for inacuracys

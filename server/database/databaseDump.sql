@@ -42,17 +42,24 @@ CREATE TABLE `posts` (
   `post_title` VARCHAR(100) DEFAULT NULL,
   `post_description` VARCHAR(2000) DEFAULT NULL,
   `likes` INT(11) DEFAULT NULL,
+  `filename` VARCHAR(255) DEFAULT NULL,
+  `filetype` VARCHAR(45) DEFAULT NULL,
+  `filesize` INT(11) DEFAULT NULL,
+  `thumbnail` VARCHAR(255) DEFAULT NULL,
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
-
-CREATE TABLE `post_media` (
-  `media_id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY UNIQUE,
+-- was not a good solution
+/* CREATE TABLE `post_media` (
+  `file_id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY UNIQUE,
   `post_id` INT(11) DEFAULT NULL,
-  `filename` VARCHAR(45) DEFAULT NULL,
+  `filename` VARCHAR(255) DEFAULT NULL,
+  `filetype` VARCHAR(45) DEFAULT NULL,
+  `filesize` INT(11) DEFAULT NULL,
+  `thumbnail` VARCHAR(255) DEFAULT NULL,
   FOREIGN KEY (`post_id`) REFERENCES `posts` (`post_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci; */
 
 
 CREATE TABLE `comments` (
@@ -148,16 +155,11 @@ VALUES
   (2, 2, FALSE, TRUE);
 
 
-INSERT INTO posts (user_id, post_title, post_description)
+INSERT INTO posts (user_id, post_title, post_description, filename)
 VALUES
-(1, 'Puisto siivottu', 'Kävin siivoamassa läheisen puiston kokonaan eilen illalla'),
-(1, 'Puisto siivottu', 'Kävin siivoamassa läheisen puiston kokonaan eilen illalla'),
-(2, 'Täällä tapahtumass tänään', 'Tsekkasin tän päivän tapahtuman. Ihan hyvä ja rento meininki tääl');
-
-INSERT INTO post_media (post_id, filename)
-VALUES   
-(1, 'Puisto.png'),
-(2, 'tapahtuma kuva.png');
+(1, 'Puisto siivottu', 'Kävin siivoamassa läheisen puiston kokonaan eilen illalla', 'Puisto.png'),
+(1, 'Puisto siivottu', 'Kävin siivoamassa läheisen puiston kokonaan eilen illalla','tapahtuma kuva.png'),
+(2, 'Täällä tapahtumass tänään', 'Tsekkasin tän päivän tapahtuman. Ihan hyvä ja rento meininki tääl','tapahtuma kuva.png');
 
 INSERT INTO tags (tag_name)
 VALUES

@@ -1,7 +1,7 @@
 import { ResultSetHeader, RowDataPacket } from "mysql2";
 import { promisePool } from "../../lib/db";
-import { User, UserWithNoPassword } from "../../types/EcoWDBTypes";
-import { UserDeleteResponse } from "../../types/MessageTypes";
+import { User, UserWithNoPassword } from "ecwtypes/EcoWDBTypes";
+import { UserDeleteResponse } from "ecwtypes/MessageTypes";
 import CustomError from "../../classes/CustomError";
 
 const getUserById = async (id: number): Promise<UserWithNoPassword> => {

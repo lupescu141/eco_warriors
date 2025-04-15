@@ -1,9 +1,9 @@
 import React, { createContext, useState } from "react";
 import { useAuthentication, useUser } from "../hooks/apiHooks";
-import { AuthContextType, Credentials } from "../types/LocalTypes";
+import { AuthContextType, Credentials } from "ecwtypes/LocalTypes";
 import { useLocation, useNavigate } from "react-router";
-import { UserWithNoPassword } from "../types/EcoWDBTypes";
-import { UserResponse } from "../types/MessageTypes";
+import { UserWithNoPassword } from "ecwtypes/EcoWDBTypes";
+import { UserResponse } from "ecwtypes/MessageTypes";
 
 const UserContext = createContext<AuthContextType | null>(null);
 

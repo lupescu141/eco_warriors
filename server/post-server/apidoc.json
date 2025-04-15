@@ -1,9 +1,9 @@
 {
-  "name": "Hybridisovellukset, Media API",
+  "name": "Eco Warriors, Media API",
   "version": "1.0.0",
   "description": "For Metropolia Courses",
   "title": "Media API",
-  "url": "/api/v1",
+  "url": "/api/post",
   "template": {
     "withCompare": true,
     "withGenerator": true,

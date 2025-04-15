@@ -10,7 +10,7 @@
     "postbuild": "npm run apidoc",
     "lint": "eslint --fix src test",
     "test": "jest --detectOpenHandles --forceExit",
-    "apidoc": "apidoc -c apidoc.json -o public/  -t apidoc-template"
+    "apidoc": "apidoc"
   },
   "dependencies": {
     "cors": "^2.8.5",

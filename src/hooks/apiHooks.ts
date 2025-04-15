@@ -94,10 +94,10 @@ const useUser = () => {
 };
 export { useUser };
 
-const useMedia = () => {
+const usePost = () => {
   const [mediaArray, setMediaArray] = useState<MediaItemWithOwner[]>([]);
   useEffect(() => {
-    const getMedia = async () => {
+    const getPost = async () => {
       try {
         // kaikki mediat ilman omistajan tietoja
         const media = await fetchData<FullPost[]>(
@@ -126,10 +126,10 @@ const useMedia = () => {
       }
     };
 
-    getMedia();
+    getPost();
   }, []);
 
-  const postMedia = async (
+  const newPost = async (
     file: UploadResponse,
     inputs: Record<string, string>,
     token: string
@@ -162,7 +162,7 @@ const useMedia = () => {
       options
     );
   };
-  return { mediaArray, postMedia };
+  return { mediaArray, newPost };
 };
 
 const useFile = () => {
@@ -182,4 +182,4 @@ const useFile = () => {
   return { postFile };
 };
 
-export { useMedia, useFile };
+export { usePost, useFile };

@@ -1,7 +1,7 @@
 import "../styles/UploadModal.css";
 import { useForm } from "../hooks/formHooks";
 import { ChangeEvent, useRef, useState } from "react";
-import { useFile, useMedia } from "../hooks/apiHooks";
+import { useFile, usePost } from "../hooks/apiHooks";
 
 type UploadModalProps = {
   closeModal: () => void;
@@ -11,7 +11,7 @@ const UploadModal = ({ closeModal }: UploadModalProps) => {
   const [uploading, setUploading] = useState<boolean>(false);
   const [file, setFile] = useState<File | null>(null);
   const { postFile } = useFile();
-  const { postMedia } = useMedia();
+  const { newPost } = usePost();
 
   const initValues = {
     title: "",
@@ -35,7 +35,7 @@ const UploadModal = ({ closeModal }: UploadModalProps) => {
     try {
       if (!file || !token) return;
       const fileResult = await postFile(file, token);
-      await postMedia(fileResult, inputs, token);
+      await newPost(fileResult, inputs, token);
       setInputs(initValues);
       setFile(null);
       resetForm();

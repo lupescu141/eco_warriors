@@ -119,15 +119,19 @@ const deleteUser = async (id: number): Promise<UserDeleteResponse> => {
     // deletes all user data from relevant tables and then the user
     await connection.beginTransaction();
     await connection.execute("DELETE FROM comments WHERE user_id = ?;", [id]);
-    /* await connection.execute("DELETE FROM likes WHERE user_id = ?;", [id]); */
+    await connection.execute("DELETE FROM likes WHERE user_id = ?;", [id]);
+    await connection.execute("DELETE FROM comments WHERE user_id = ?;", [id]);
     await connection.execute("DELETE FROM user_stats WHERE user_id = ?;", [id]);
-    await connection.execute("DELETE FROM posts WHERE user_id = ?;", [id]);
     await connection.execute(
-      "DELETE FROM post_images WHERE post_id IN (SELECT id FROM posts WHERE user_id = ?);",
+      "DELETE FROM likes WHERE post_id IN (SELECT post_id FROM posts WHERE user_id = ?) ;",
       [id]
     );
+    await connection.execute(
+      "DELETE FROM comments WHERE post_id IN (SELECT post_id FROM posts WHERE user_id = ?) ;",
+      [id]
+    );
+    await connection.execute("DELETE FROM posts WHERE user_id = ?;", [id]);
     await connection.execute("DELETE FROM top10 WHERE user_id = ?;", [id]);
-    // Deleted some odd repeted data. Check again later if it existed for a good reason
     const [result] = await connection.execute<ResultSetHeader>(
       "DELETE FROM users WHERE user_id = ?;",
       [id]

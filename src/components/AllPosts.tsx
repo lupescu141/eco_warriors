@@ -6,10 +6,6 @@ type MockdataProps = {
   mockdata: MediaItemWithOwner;
 };
 
-// type PostProps = {
-//   postData: FullPost;
-// };
-
 const AllPosts = ({ mockdata }: MockdataProps) => {
   return (
     <>
@@ -28,12 +24,7 @@ const AllPosts = ({ mockdata }: MockdataProps) => {
             alt={mockdata.post_title}
           ></img>
           <h2>{mockdata.post_title}</h2>
-          <p>
-            {mockdata.post_description} + Lorem ipsum dolor sit amet consectetur
-            adipisicing elit. Doloremque sed recusandae voluptatum magni quasi
-            ea, sunt numquam et eligendi quaerat, ipsam atque sequi. Incidunt
-            vel aut possimus ullam animi commodi?
-          </p>
+          <p>{mockdata.post_description}</p>
           <Link to="/single" className="link" state={{ item: mockdata }}>
             Read more..
           </Link>

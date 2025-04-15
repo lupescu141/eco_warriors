@@ -95,7 +95,7 @@ const useUser = () => {
 export { useUser };
 
 const usePost = () => {
-  const [mediaArray, setMediaArray] = useState<MediaItemWithOwner[]>([]);
+  const [postArray, setMediaArray] = useState<MediaItemWithOwner[]>([]);
   useEffect(() => {
     const getPost = async () => {
       try {
@@ -162,7 +162,7 @@ const usePost = () => {
       options
     );
   };
-  return { mediaArray, newPost };
+  return { postArray, newPost };
 };
 
 const useFile = () => {

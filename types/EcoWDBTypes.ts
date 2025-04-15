@@ -73,7 +73,7 @@ export type PostItemTag = {
   tag_id: number;
 };
 
-export type MediaItemWithOwner = Posts & Pick<User, "username">;
+export type MediaItemWithOwner = FullPost & Pick<User, "username">;
 
 export type TagResult = PostItemTag & Tag;
 

@@ -34,25 +34,18 @@ export type EventOrganizer = {
 };
 
 // NO server for posting exist yeat
-export type Posts = {
+export type FullPost = {
   post_id: number;
-  user_id: number;
   post_title: string;
   post_description: string;
-  likes: number;
-  created_at: Date | string;
-};
-
-export type PostMedia = {
-  file_id: number;
+  user_id: number;
   filename: string;
-  post_id: number;
   filesize: number;
   thumbnail: string;
   filetype: string;
+  likes: number;
+  created_at: Date | string;
 };
-
-export type FullPost = Posts & Omit<PostMedia, "post_id">;
 
 export type Comments = {
   comment_id: number;

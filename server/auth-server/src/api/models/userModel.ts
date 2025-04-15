@@ -85,7 +85,7 @@ const modifyUser = async (
   try {
     await connection.beginTransaction();
 
-    const allowedFields = ["username", "email", "password", "user_level_id"];
+    const allowedFields = ["username", "email", "password"];
     const updates = Object.entries(user)
       .filter(([key]) => allowedFields.includes(key))
       .map(([key]) => `${key} = ?`);

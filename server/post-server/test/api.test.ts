@@ -60,7 +60,7 @@ describe("Media API", () => {
       uploadApi,
       "/upload",
       mediaFile,
-      token,
+      token
     );
   });
 
@@ -74,7 +74,7 @@ describe("Media API", () => {
         filetype: uploadResponse.data.filetype,
         filesize: uploadResponse.data.filesize,
       };
-      await postMediaItem(app, "/api/media", token, mediaItem);
+      await postMediaItem(app, "/api/post", token, mediaItem);
     }
   });
 
@@ -85,7 +85,7 @@ describe("Media API", () => {
     mediaItems = await getMediaItems(app);
     console.log(
       "----------------------&&& " +
-        JSON.stringify(mediaItems[mediaItems.length - 1]),
+        JSON.stringify(mediaItems[mediaItems.length - 1])
     );
     testMediaItem = mediaItems[mediaItems.length - 1];
   });
@@ -97,7 +97,7 @@ describe("Media API", () => {
 
   it("Should update media item", async () => {
     console.log(
-      "---------------------------------------%% " + testMediaItem.post_id,
+      "---------------------------------------%% " + testMediaItem.post_id
     );
     const updatedItem: Omit<FullPost, "post_id" | "thumbnail" | "created_at"> =
       {

@@ -1,6 +1,7 @@
 import "../styles/UploadModal.css";
 import { useForm } from "../hooks/formHooks";
 import { ChangeEvent, useRef, useState } from "react";
+import { useFile, useMedia } from "../hooks/apiHooks";
 
 type UploadModalProps = {
   closeModal: () => void;
@@ -9,6 +10,8 @@ type UploadModalProps = {
 const UploadModal = ({ closeModal }: UploadModalProps) => {
   const [uploading, setUploading] = useState<boolean>(false);
   const [file, setFile] = useState<File | null>(null);
+  const { postFile } = useFile();
+  const { postMedia } = useMedia();
 
   const initValues = {
     title: "",
@@ -25,10 +28,22 @@ const UploadModal = ({ closeModal }: UploadModalProps) => {
   };
 
   // Callback placeholder useFormia varten - vaihda tää doUploadiks
-  const handleFormSubmit = () => {
+  const doFormSubmit = async () => {
+    const token = localStorage.getItem("token");
     setUploading(true);
     console.log("Form submitted with values:", inputs, file);
-
+    try {
+      if (!file || !token) return;
+      const fileResult = await postFile(file, token);
+      await postMedia(fileResult, inputs, token);
+      setInputs(initValues);
+      setFile(null);
+      resetForm();
+    } catch (e) {
+      console.log((e as Error).message);
+    } finally {
+      setUploading(false);
+    }
     setTimeout(() => {
       // resetForm();
       closeModal();
@@ -36,7 +51,7 @@ const UploadModal = ({ closeModal }: UploadModalProps) => {
   };
 
   const { handleSubmit, handleInputChange, inputs, setInputs } = useForm(
-    handleFormSubmit,
+    doFormSubmit,
     initValues
   );
 
@@ -65,7 +80,7 @@ const UploadModal = ({ closeModal }: UploadModalProps) => {
             {/* TITLE */}
             <input
               onChange={handleInputChange}
-              value={inputs.title}
+              value={inputs.post_title}
               type="text"
               name="title"
               id="title"
@@ -76,7 +91,7 @@ const UploadModal = ({ closeModal }: UploadModalProps) => {
             {/* DESCRIPTION */}
             <textarea
               onChange={handleInputChange}
-              value={inputs.description}
+              value={inputs.post_description}
               name="description"
               id="description"
               placeholder="Description"

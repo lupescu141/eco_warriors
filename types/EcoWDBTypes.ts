@@ -6,11 +6,6 @@ export type User = {
   created_at: Date | string;
 };
 
-export type UserWithLevel = {
-  level_id: number;
-  level_name: "Admin" | "User" | "Guest";
-};
-
 export type UserWithNoPassword = Omit<User, "password">;
 
 // check TokenContent and edit this
@@ -40,24 +35,31 @@ export type EventOrganizer = {
 
 // NO server for posting exist yeat
 export type Posts = {
-  id: number;
+  post_id: number;
+  user_id: number;
   post_title: string;
   post_description: string;
   likes: number;
-  username: string;
+  created_at: Date | string;
 };
 
-export type PostImages = {
-  id: number;
+export type PostMedia = {
+  file_id: number;
   filename: string;
   post_id: number;
+  filesize: number;
+  thumbnail: string;
+  filetype: string;
 };
 
+export type FullPost = Posts & Omit<PostMedia, "post_id">;
+
 export type Comments = {
-  id: number;
-  username: string;
+  comment_id: number;
+  user_id: string;
   comment: string;
   post_id: number;
+  created_at: Date;
 };
 
 // will be implemented later
@@ -73,11 +75,40 @@ export type Tag = {
   tag_name: string;
 };
 
-export type MediaItemTag = {
-  media_id: number;
+export type PostItemTag = {
+  post_id: number;
   tag_id: number;
 };
 
 export type MediaItemWithOwner = Posts & Pick<User, "username">;
 
-export type TagResult = MediaItemTag & Tag;
+export type TagResult = PostItemTag & Tag;
+
+export type Comment = {
+  comment_id: number;
+  post_id: number;
+  user_id: number;
+  text: string;
+};
+
+export type Likes = {
+  like_id: number;
+  post_id: number;
+  user_id: number;
+  created_at: Date;
+};
+
+export type Tasks = {
+  task_id: number;
+  task_title: string;
+  task_description: string;
+  points: number;
+  level: number;
+};
+
+export type UserTask = {
+  task_id: number;
+  user_id: number;
+  complete: boolean;
+  active: boolean;
+};

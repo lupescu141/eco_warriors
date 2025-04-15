@@ -32,12 +32,13 @@ type BooleanResponse = MessageResponse & {
   success: boolean;
 };
 
-// for upload server
+// for upload and post server
 type UploadResponse = MessageResponse & {
   data: {
     filename: string;
-    media_type: string;
+    filetype: string;
     filesize: number;
+    screenshots?: string[];
   };
 };
 

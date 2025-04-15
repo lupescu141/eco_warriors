@@ -5,7 +5,7 @@ type RegisterCredentials = Pick<User, "username" | "password" | "email">;
 
 type AuthContextType = {
   user: UserWithNoPassword | null;
-  handleLogin: (credentials: Credentials, callback: () => void) => void;
+  handleLogin: (credentials: Credentials) => void;
   handleLogout: () => void;
   handleAutoLogin: () => void;
 };

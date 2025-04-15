@@ -1,10 +1,10 @@
 import { fetchData } from "../lib/functions";
-import { Credentials, RegisterCredentials } from "../types/LocalTypes.ts";
+import { Credentials, RegisterCredentials } from "ecwtypes/LocalTypes.ts";
 import {
   AvailableResponse,
   LoginResponse,
   UserResponse,
-} from "../types/MessageTypes.ts";
+} from "ecwtypes/MessageTypes.ts";
 
 // AUTENTIKOINTI
 

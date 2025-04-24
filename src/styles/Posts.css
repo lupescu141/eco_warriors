@@ -74,7 +74,8 @@ button {
   gap: 1em;
   text-align: center;
 }
-span {
+.all-posts-container span,
+.single-post-container span {
   height: 2rem;
   width: 6rem;
   color: white;

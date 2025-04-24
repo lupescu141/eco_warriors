@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
-import { mockdata } from "../mockdata/mockdata";
+import { usePost } from "../hooks/apiHooks";
 
 const NewestPosts = () => {
+  const { postArray } = usePost();
+
   // Lajittele mockdata created_at-kentän perusteella
-  const sortedMockdata = [...mockdata].sort(
+  const sortedMockdata = [...postArray].sort(
     (a, b) =>
       new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
   );
@@ -18,16 +20,11 @@ const NewestPosts = () => {
         {newestPosts.map((post) => (
           <div key={post.post_id} className="card-container">
             <Link to="/single" className="np-link" state={{ item: post }}>
-              <img
-                src={
-                  "https://placehold.co/200x100@2x/light-grey/white/png?text=IMG"
-                }
-                alt={post.title}
-              ></img>
+              <img src={post.filename} alt={post.post_title}></img>
               <div className="text-container">
-                <h4>{post.title}</h4>
+                <h4>{post.post_title}</h4>
                 <p>{post.username}</p>
-                <p>{post.created_at}</p>
+                <p>{new Date(post.created_at).toLocaleString("fi-FI")}</p>
               </div>
             </Link>
           </div>

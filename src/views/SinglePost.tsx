@@ -11,7 +11,6 @@ const SinglePost = () => {
   const { state } = useLocation();
   const item: MediaItemWithOwner = state.item;
 
-  // console.log("löytyykä", item);
   if (!item) {
     return <div>Error!</div>;
   }
@@ -24,9 +23,7 @@ const SinglePost = () => {
       </div>
       <hr style={{ width: "90vw", margin: "auto", backgroundColor: "red" }} />
       <div className="single-post-container">
-        <img
-          src={"https://placehold.co/300x200@2x/light-grey/white/png?text=IMG"}
-        ></img>
+        <img src={item.filename} alt={item.post_title}></img>
         <h2>{item.post_title}</h2>
         <div className="datetime-user-container">
           <div className="datetime-user">

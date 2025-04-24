@@ -27,7 +27,7 @@ const Posts = () => {
       <hr style={{ width: "90vw", margin: "auto" }} />
 
       {[...postItems].reverse().map((post) => (
-        <AllPosts key={post.post_id} mockdata={post} />
+        <AllPosts key={post.post_id} post={post} />
       ))}
     </>
   );

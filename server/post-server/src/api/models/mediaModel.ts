@@ -44,7 +44,8 @@ const BASE_MEDIA_QUERY = `
       ELSE NULL
     END AS screenshots
   FROM posts
-  `;
+`;
+
 const fetchAllPost = async (
   page: number | undefined = undefined,
   limit: number | undefined = undefined
@@ -54,7 +55,6 @@ const fetchAllPost = async (
     ${limit ? "LIMIT ? OFFSET ?" : ""}`;
   const params = [uploadPath, limit, offset];
   const stmt = promisePool.format(sql, params);
-  console.log(stmt);
 
   const [rows] = await promisePool.execute<RowDataPacket[] & FullPost[]>(stmt);
   return rows;
@@ -222,8 +222,8 @@ const fetchMostLikedPost = async (): Promise<FullPost> => {
        ORDER BY COUNT(*) DESC
        LIMIT 1
      )`;
-  /*   const params = [uploadPath]; */
-  const stmt = promisePool.format(sql /* params */);
+  const params = [uploadPath];
+  const stmt = promisePool.format(sql, params);
   console.log(stmt);
 
   const [rows] = await promisePool.execute<

@@ -14,6 +14,7 @@ import ScrollToTop from "react-scroll-to-top";
 import { ShowFromTop } from "./components/ShowFromTop";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronUp } from "@fortawesome/free-solid-svg-icons";
+import Leaderboard from "./views/Leaderboard";
 <FontAwesomeIcon icon={faChevronUp} />;
 
 const App = () => {
@@ -35,6 +36,7 @@ const App = () => {
             <Route path="/myTasks" element={<Tasks />} />
             <Route path="/logout" element={<Logout />} />
             <Route path="/myposts" element={<MyPostsView />} />
+            <Route path="/leaderboard" element={<Leaderboard />} />
           </Route>
         </Routes>
       </UserProvider>

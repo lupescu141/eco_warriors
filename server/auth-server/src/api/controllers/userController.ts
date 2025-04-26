@@ -119,7 +119,7 @@ const userPut = async (
 };
 
 const userPic = async (
-  req: Request<ProfilePic>,
+  req: Request<object, object, ProfilePic>,
   res: Response<MessageResponse, { user: TokenContent }>,
   next: NextFunction
 ) => {

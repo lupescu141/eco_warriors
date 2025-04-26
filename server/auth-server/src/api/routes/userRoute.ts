@@ -7,6 +7,7 @@ import {
   userDeleteAsAdmin,
   userGet,
   userListGet,
+  userPic,
   userPost,
   userPut,
   userPutAsAdmin,
@@ -78,7 +79,8 @@ router.put(
   "/profile-picture",
   authenticate,
   body("filetype").trim().notEmpty().isMimeType(),
-  body("filesize").notEmpty().isInt({ min: 1 }).toInt()
+  body("filesize").notEmpty().isInt({ min: 1 }).toInt(),
+  userPic
 );
 
 // Delete user as user

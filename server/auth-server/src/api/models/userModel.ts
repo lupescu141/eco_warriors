@@ -111,7 +111,7 @@ const modifyUser = async (
       throw new CustomError("No valid fields to update", 400);
     }
     const [result] = await connection.execute<ResultSetHeader>(
-      `UPDATE Users SET ${updates.join(", ")} WHERE user_id = ?`,
+      `UPDATE users SET ${updates.join(", ")} WHERE user_id = ?`,
       [...values, id]
     );
     if (result.affectedRows === 0) {
@@ -127,13 +127,11 @@ const modifyUser = async (
 };
 
 const newPic = async (pic: ProfilePic) => {
-  const connection = await promisePool.getConnection();
-
-  try {
-    await connection.beginTransaction();
-  } finally {
-    connection.release();
-  }
+  await promisePool.execute<ResultSetHeader>(
+    `UPDATE user_pic SET filename = ?, filesize = ?, filetype = ? WHERE user_id = ?`,
+    [pic.filename, pic.filesize, pic.filetype, pic.user_id]
+  );
+  return;
 };
 
 // needs modification add likes table maybe

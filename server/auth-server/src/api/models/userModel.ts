@@ -1,6 +1,6 @@
 import { ResultSetHeader, RowDataPacket } from "mysql2";
 import { promisePool } from "../../lib/db";
-import { User, UserWithNoPassword } from "ecwtypes/EcoWDBTypes";
+import { ProfilePic, User, UserWithNoPassword } from "ecwtypes/EcoWDBTypes";
 import { UserDeleteResponse } from "ecwtypes/MessageTypes";
 import CustomError from "../../classes/CustomError";
 
@@ -61,20 +61,34 @@ const getUserByUsername = async (username: string): Promise<User | null> => {
 const createUser = async (
   user: Pick<User, "username" | "password" | "email">
 ): Promise<UserWithNoPassword> => {
-  const sql = `INSERT INTO users (username, password, email)
-       VALUES (?, ?, ?)`;
-  const stmt = promisePool.format(sql, [
-    user.username,
-    user.password,
-    user.email,
-  ]);
-  const [result] = await promisePool.execute<ResultSetHeader>(stmt);
+  const connection = await promisePool.getConnection();
+  try {
+    await connection.beginTransaction();
+    const sql = `INSERT INTO users (username, password, email)
+    VALUES (?, ?, ?)`;
 
-  if (result.affectedRows === 0) {
-    throw new CustomError("Failed to create user", 500);
+    const sql2 = `INSERT INTO user_stats (user_id)
+    VALUES (?)`;
+
+    const sql3 = `INSERT INTO user_pic (user_id)
+    VALUES (?)`;
+    const [result] = await connection.execute<ResultSetHeader>(sql, [
+      user.username,
+      user.password,
+      user.email,
+    ]);
+    await connection.execute(sql2, [result.insertId]);
+    await connection.execute(sql3, [result.insertId]);
+    await connection.commit();
+
+    if (result.affectedRows === 0) {
+      throw new CustomError("Failed to create user", 500);
+    }
+
+    return await getUserById(result.insertId);
+  } finally {
+    connection.release();
   }
-
-  return await getUserById(result.insertId);
 };
 
 const modifyUser = async (
@@ -107,6 +121,16 @@ const modifyUser = async (
     await connection.commit();
     const updatedUser = await getUserById(id);
     return updatedUser;
+  } finally {
+    connection.release();
+  }
+};
+
+const newPic = async (pic: ProfilePic) => {
+  const connection = await promisePool.getConnection();
+
+  try {
+    await connection.beginTransaction();
   } finally {
     connection.release();
   }
@@ -159,5 +183,6 @@ export {
   getUserByUsername,
   createUser,
   modifyUser,
+  newPic,
   deleteUser,
 };

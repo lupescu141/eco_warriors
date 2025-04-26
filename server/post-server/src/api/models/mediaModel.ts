@@ -222,8 +222,8 @@ const fetchMostLikedPost = async (): Promise<FullPost> => {
        ORDER BY COUNT(*) DESC
        LIMIT 1
      )`;
-  /*   const params = [uploadPath]; */
-  const stmt = promisePool.format(sql /* params */);
+  const params = [uploadPath];
+  const stmt = promisePool.format(sql, params);
   console.log(stmt);
 
   const [rows] = await promisePool.execute<

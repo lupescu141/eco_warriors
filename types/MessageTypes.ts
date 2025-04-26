@@ -1,5 +1,5 @@
 import { UserWithNoPassword } from "./EcoWDBTypes";
-import { Posts } from "./EcoWDBTypes";
+import { FullPost } from "./EcoWDBTypes";
 
 type MessageResponse = {
   message: string;
@@ -43,7 +43,7 @@ type UploadResponse = MessageResponse & {
 };
 
 type MediaResponse = MessageResponse & {
-  media: Posts;
+  media: FullPost;
 };
 
 export type {

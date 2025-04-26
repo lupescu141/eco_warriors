@@ -14,9 +14,17 @@ CREATE TABLE `users` (
 CREATE TABLE `user_stats`(
   `stats_id` INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `user_id` INT(11) NOT NULL,
-  `user_score` INT(11) DEFAULT NULL,
-  `user_level` INT NOT NULL,
-  `profile_img` VARCHAR(450) DEFAULT NULL,
+  `user_score` INT(11) DEFAULT 0,
+  `user_level` INT(11) DEFAULT 1,
+  FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+CREATE TABLE `user_pic` (
+  `pf_id` INT NOt NULL AUTO_INCREMENT PRIMARY KEY UNIQUE,
+  `user_id` INT(11) NOT NULL,
+  `filename` VARCHAR(450) NOT NULL DEFAULT "defaul-img",
+  `filesize` BIGINT NOT NULL DEFAULT 0,
+  `filetype` VARCHAR(45) DEFAULT NULL,
   FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
@@ -45,22 +53,9 @@ CREATE TABLE `posts` (
   `filename` VARCHAR(255) DEFAULT NULL,
   `filetype` VARCHAR(45) DEFAULT NULL,
   `filesize` INT(11) DEFAULT NULL,
-  `thumbnail` VARCHAR(255) DEFAULT NULL,
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
-
--- was not a good solution
-/* CREATE TABLE `post_media` (
-  `file_id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY UNIQUE,
-  `post_id` INT(11) DEFAULT NULL,
-  `filename` VARCHAR(255) DEFAULT NULL,
-  `filetype` VARCHAR(45) DEFAULT NULL,
-  `filesize` INT(11) DEFAULT NULL,
-  `thumbnail` VARCHAR(255) DEFAULT NULL,
-  FOREIGN KEY (`post_id`) REFERENCES `posts` (`post_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci; */
-
 
 CREATE TABLE `comments` (
   `comment_id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,

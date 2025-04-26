@@ -27,11 +27,12 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/uploads", express.static("uploads"));
+app.use("/upload-profile", express.static("upload-profile"));
 
 // serve public folder for apidoc
 app.use(express.static("public"));
 
-app.use("/api/v1", api);
+app.use("/api", api);
 
 app.use(notFound);
 app.use(errorHandler);

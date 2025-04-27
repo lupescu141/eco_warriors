@@ -10,13 +10,11 @@ import { Logout } from "./views/Logout";
 import SinglePost from "./views/SinglePost";
 import Tasks from "./views/Tasks";
 import { UserProvider } from "./contexts/UserContext";
-import { Profile } from "./views/Profile";
 import ScrollToTop from "react-scroll-to-top";
 import { ShowFromTop } from "./components/ShowFromTop";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronUp } from "@fortawesome/free-solid-svg-icons";
 <FontAwesomeIcon icon={faChevronUp} />;
-
 
 const App = () => {
   return (
@@ -37,7 +35,6 @@ const App = () => {
             <Route path="/myTasks" element={<Tasks />} />
             <Route path="/logout" element={<Logout />} />
             <Route path="/myposts" element={<MyPostsView />} />
-            <Route path="/profile" element={<Profile />} />
           </Route>
         </Routes>
       </UserProvider>

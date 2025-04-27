@@ -1,6 +1,7 @@
 import React from "react";
 import "./profile.css";
 import { ProfileHeader } from "../components/ProfileHeader";
+import ProfileForm from "../components/ProfileForm";
 
 const Profile = () => {
   return (
@@ -12,6 +13,7 @@ const Profile = () => {
           user_score={2000}
           profile_img=""
         ></ProfileHeader>
+        <ProfileForm></ProfileForm>
         <div className="information_container"></div>
       </div>
     </>

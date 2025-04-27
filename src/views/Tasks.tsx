@@ -51,7 +51,7 @@ const Tasks = () => {
   return (
     <>
       <div className="task-header-container">
-        <h1>Monthly Checklist</h1>
+        <h1>Monthly Tasks</h1>
       </div>
       <hr style={{ width: "90vw", margin: "auto" }} />
       <div className="tasks">

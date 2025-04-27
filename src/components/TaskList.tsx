@@ -52,7 +52,7 @@ const TaskList = ({ task }: TaskProps) => {
     <>
       <div
         key={task.task_id}
-        className={`task-container ${active ? "active" : ""}`}
+        className={`task-container ${completed ? "completed" : active ? "active" : ""} `}
       >
         <div className="task-header">
           <h3>{task.title}</h3>

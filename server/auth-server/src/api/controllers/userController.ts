@@ -5,6 +5,7 @@ import CustomError from "../../classes/CustomError";
 import bcrypt from "bcryptjs";
 import {
   MessageResponse,
+  Pfresposne,
   UserDeleteResponse,
   UserResponse,
 } from "ecwtypes/MessageTypes";
@@ -15,6 +16,7 @@ import {
   getUserByEmail,
   getUserById,
   getUserByUsername,
+  getUserPic,
   modifyUser,
   newPic,
 } from "../models/userModel";
@@ -127,6 +129,22 @@ const userPic = async (
     req.body.user_id = res.locals.user.user_id;
     await newPic(req.body);
     res.json({ message: "Profile picture changed" });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const fetchUserPic = async (
+  req: Request<{ id: string }, object, Pick<User, "user_id">>,
+  res: Response<Pfresposne, { user: TokenContent }>,
+  next: NextFunction
+) => {
+  try {
+    const response = await getUserPic(Number(req.params.id));
+    res.json({
+      message: "Profile picture fetched",
+      filename: response.filename,
+    });
   } catch (error) {
     next(error);
   }
@@ -268,6 +286,7 @@ export {
   userPost,
   userPut,
   userPic,
+  fetchUserPic,
   userDelete,
   userPutAsAdmin,
   userDeleteAsAdmin,

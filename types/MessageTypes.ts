@@ -46,6 +46,10 @@ type MediaResponse = MessageResponse & {
   media: FullPost;
 };
 
+type Pfresposne = MessageResponse & {
+  filename: string;
+};
+
 export type {
   MessageResponse,
   MediaResponse,
@@ -56,4 +60,5 @@ export type {
   UserDeleteResponse,
   AvailableResponse,
   BooleanResponse,
+  Pfresposne
 };

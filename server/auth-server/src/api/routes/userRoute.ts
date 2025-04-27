@@ -3,6 +3,7 @@ import {
   checkEmailExists,
   checkToken,
   checkUsernameExists,
+  fetchUserPic,
   userDelete,
   userDeleteAsAdmin,
   userGet,
@@ -75,13 +76,16 @@ router.put(
   userPut
 );
 
-router.put(
-  "/profile-picture",
-  authenticate,
-  body("filetype").trim().notEmpty().isMimeType(),
-  body("filesize").notEmpty().isInt({ min: 1 }).toInt(),
-  userPic
-);
+router.get("/profile-picture/:id", fetchUserPic);
+
+router
+  .route("/profile-picture")
+  .put(
+    authenticate,
+    body("filetype").trim().notEmpty().isMimeType(),
+    body("filesize").notEmpty().isInt({ min: 1 }).toInt(),
+    userPic
+  );
 
 // Delete user as user
 router.delete("/", authenticate, userDelete);

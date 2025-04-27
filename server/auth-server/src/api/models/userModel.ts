@@ -1,8 +1,10 @@
 import { ResultSetHeader, RowDataPacket } from "mysql2";
 import { promisePool } from "../../lib/db";
 import { ProfilePic, User, UserWithNoPassword } from "ecwtypes/EcoWDBTypes";
-import { UserDeleteResponse } from "ecwtypes/MessageTypes";
+import { Pfresposne, UserDeleteResponse } from "ecwtypes/MessageTypes";
 import CustomError from "../../classes/CustomError";
+
+const uploadPath = process.env.UPLOAD_URL;
 
 const getUserById = async (id: number): Promise<UserWithNoPassword> => {
   const [rows] = await promisePool.execute<
@@ -134,6 +136,15 @@ const newPic = async (pic: ProfilePic) => {
   return;
 };
 
+const getUserPic = async (user_id: number) => {
+  const [rows] = await promisePool.execute<RowDataPacket[] & Pfresposne[]>(
+    `SELECT CONCAT(?, filename) AS filename FROM user_pic WHERE user_id=?`,
+    [uploadPath, user_id]
+  );
+
+  return rows[0];
+};
+
 // needs modification add likes table maybe
 const deleteUser = async (id: number): Promise<UserDeleteResponse> => {
   const connection = await promisePool.getConnection();
@@ -182,5 +193,6 @@ export {
   createUser,
   modifyUser,
   newPic,
+  getUserPic,
   deleteUser,
 };

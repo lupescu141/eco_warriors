@@ -7,6 +7,7 @@ import {
   userDeleteAsAdmin,
   userGet,
   userListGet,
+  userPic,
   userPost,
   userPut,
   userPutAsAdmin,
@@ -53,8 +54,8 @@ router.put(
     .optional()
     .trim()
     .escape()
-    .isLength({ min: 3, max: 50 })
-    .withMessage("Username must be between 3-50 characters")
+    .isLength({ min: 3, max: 45 })
+    .withMessage("Username must be between 3-45 characters")
     .matches(/^[a-zA-Z0-9_-]+$/)
     .withMessage(
       "Username can only contain letters, numbers, underscores and dashes"
@@ -72,6 +73,14 @@ router.put(
     .withMessage("Invalid email format"),
   validationErrors,
   userPut
+);
+
+router.put(
+  "/profile-picture",
+  authenticate,
+  body("filetype").trim().notEmpty().isMimeType(),
+  body("filesize").notEmpty().isInt({ min: 1 }).toInt(),
+  userPic
 );
 
 // Delete user as user

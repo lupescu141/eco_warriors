@@ -1,32 +1,25 @@
 import { Link } from "react-router-dom";
-import { Post } from "../mockdata/mockdata";
+import { MediaItemWithOwner } from "ecwtypes/EcoWDBTypes";
+// import { Post } from "../mockdata/mockdata";
 
 type MockdataProps = {
-  mockdata: Post;
+  mockdata: MediaItemWithOwner;
 };
 
 const AllPosts = ({ mockdata }: MockdataProps) => {
   return (
     <>
+      {console.log(mockdata)}
       <div key={mockdata.post_id} className="all-posts-container">
         <div className="onePost-header">
           <h2>Posted by: {mockdata.username}</h2>
-          <p>{mockdata.created_at}</p>
+          {/* käytä toLocaleDateString ku haluut pois kellon */}
+          <p>{new Date(mockdata.created_at).toLocaleString("fi-FI")}</p>
         </div>
         <div className="onePost-content">
-          <img
-            src={
-              "https://placehold.co/300x200@2x/light-grey/white/png?text=IMG"
-            }
-            alt={mockdata.title}
-          ></img>
-          <h2>{mockdata.title}</h2>
-          <p>
-            {mockdata.description} + Lorem ipsum dolor sit amet consectetur
-            adipisicing elit. Doloremque sed recusandae voluptatum magni quasi
-            ea, sunt numquam et eligendi quaerat, ipsam atque sequi. Incidunt
-            vel aut possimus ullam animi commodi?
-          </p>
+          <img src={mockdata.filename} alt={mockdata.post_title}></img>
+          <h2>{mockdata.post_title}</h2>
+          <p>{mockdata.post_description}</p>
           <Link to="/single" className="link" state={{ item: mockdata }}>
             Read more..
           </Link>

@@ -18,6 +18,13 @@ export type UserStats = {
   profile_img: string;
 };
 
+export type ProfilePic = {
+  user_id: number;
+  filename: string;
+  filesize: number;
+  filetype: string;
+};
+
 // Admin and EventOrganizer has no use curently
 export type Admin = {
   admin_id: number;
@@ -41,8 +48,8 @@ export type FullPost = {
   user_id: number;
   filename: string;
   filesize: number;
-  thumbnail: string;
   filetype: string;
+  thumbnail: string;
   likes: number;
   created_at: Date | string;
 };

@@ -1,6 +1,6 @@
 import { ResultSetHeader, RowDataPacket } from "mysql2";
 import { promisePool } from "../../lib/db";
-import { User, UserWithNoPassword } from "ecwtypes/EcoWDBTypes";
+import { ProfilePic, User, UserWithNoPassword } from "ecwtypes/EcoWDBTypes";
 import { UserDeleteResponse } from "ecwtypes/MessageTypes";
 import CustomError from "../../classes/CustomError";
 
@@ -61,20 +61,34 @@ const getUserByUsername = async (username: string): Promise<User | null> => {
 const createUser = async (
   user: Pick<User, "username" | "password" | "email">
 ): Promise<UserWithNoPassword> => {
-  const sql = `INSERT INTO users (username, password, email)
-       VALUES (?, ?, ?)`;
-  const stmt = promisePool.format(sql, [
-    user.username,
-    user.password,
-    user.email,
-  ]);
-  const [result] = await promisePool.execute<ResultSetHeader>(stmt);
+  const connection = await promisePool.getConnection();
+  try {
+    await connection.beginTransaction();
+    const sql = `INSERT INTO users (username, password, email)
+    VALUES (?, ?, ?)`;
 
-  if (result.affectedRows === 0) {
-    throw new CustomError("Failed to create user", 500);
+    const sql2 = `INSERT INTO user_stats (user_id)
+    VALUES (?)`;
+
+    const sql3 = `INSERT INTO user_pic (user_id)
+    VALUES (?)`;
+    const [result] = await connection.execute<ResultSetHeader>(sql, [
+      user.username,
+      user.password,
+      user.email,
+    ]);
+    await connection.execute(sql2, [result.insertId]);
+    await connection.execute(sql3, [result.insertId]);
+    await connection.commit();
+
+    if (result.affectedRows === 0) {
+      throw new CustomError("Failed to create user", 500);
+    }
+
+    return await getUserById(result.insertId);
+  } finally {
+    connection.release();
   }
-
-  return await getUserById(result.insertId);
 };
 
 const modifyUser = async (
@@ -97,7 +111,7 @@ const modifyUser = async (
       throw new CustomError("No valid fields to update", 400);
     }
     const [result] = await connection.execute<ResultSetHeader>(
-      `UPDATE Users SET ${updates.join(", ")} WHERE user_id = ?`,
+      `UPDATE users SET ${updates.join(", ")} WHERE user_id = ?`,
       [...values, id]
     );
     if (result.affectedRows === 0) {
@@ -110,6 +124,14 @@ const modifyUser = async (
   } finally {
     connection.release();
   }
+};
+
+const newPic = async (pic: ProfilePic) => {
+  await promisePool.execute<ResultSetHeader>(
+    `UPDATE user_pic SET filename = ?, filesize = ?, filetype = ? WHERE user_id = ?`,
+    [pic.filename, pic.filesize, pic.filetype, pic.user_id]
+  );
+  return;
 };
 
 // needs modification add likes table maybe
@@ -159,5 +181,6 @@ export {
   getUserByUsername,
   createUser,
   modifyUser,
+  newPic,
   deleteUser,
 };

@@ -9,6 +9,7 @@ import {
   AvailableResponse,
   LoginResponse,
   MessageResponse,
+  Pfresposne,
   UploadResponse,
   UserResponse,
 } from "ecwtypes/MessageTypes.ts";
@@ -182,4 +183,42 @@ const useFile = () => {
   return { postFile };
 };
 
-export { usePost, useFile };
+const useImage = () => {
+
+  const sendImage = async (file: File, token: string) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    const options = {
+      method: "POST",
+      headers: { Authorization: "Bearer " + token },
+      body: formData,
+    };
+    return await fetchData<UploadResponse>(
+      import.meta.env.VITE_UPLOAD_API + "/upload",
+      options
+    );
+  };
+
+  
+
+    const getProfileImage = async () => {
+      try {
+        // hakee käyttäjän profiilikuvan
+        const profileImage = await fetchData<Pfresposne>(
+          import.meta.env.VITE_AUTH_API + "/user/profile-picture/" + 
+        );
+
+        return profileImage;
+
+      } catch (error) {
+        console.error((error as Error).message);
+      }
+
+    };
+ 
+   return { sendImage, getProfileImage };
+};
+
+
+
+export { usePost, useFile, useImage };

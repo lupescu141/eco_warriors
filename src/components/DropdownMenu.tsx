@@ -6,6 +6,11 @@ const DropdownMenu = () => {
       <div className="dropdown-menu">
         <ul>
           <li>
+            <Link to="/profile" style={{ textDecoration: "none" }}>
+              <button>Profile</button>
+            </Link>
+          </li>
+          <li>
             <Link to="/myPosts" style={{ textDecoration: "none" }}>
               <button>My posts</button>
             </Link>

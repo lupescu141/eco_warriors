@@ -135,14 +135,16 @@ const userPic = async (
 };
 
 const fetchUserPic = async (
-  req: Request<{ id: string }, object, Pick<User, "user_id">>,
+  req: Request<object, object, Pick<User, "user_id">>,
   res: Response<Pfresposne, { user: TokenContent }>,
   next: NextFunction
 ) => {
   try {
-    const response = await getUserPic(Number(req.params.id));
+    req.body.user_id = res.locals.user.user_id;
+    const response = await getUserPic(Number(req.body.user_id));
     res.json({
       message: "Profile picture fetched",
+      origin: response.origin,
       filename: response.filename,
     });
   } catch (error) {

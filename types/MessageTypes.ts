@@ -47,6 +47,7 @@ type MediaResponse = MessageResponse & {
 };
 
 type Pfresposne = MessageResponse & {
+  origin: string;
   filename: string;
 };
 
@@ -60,5 +61,5 @@ export type {
   UserDeleteResponse,
   AvailableResponse,
   BooleanResponse,
-  Pfresposne
+  Pfresposne,
 };

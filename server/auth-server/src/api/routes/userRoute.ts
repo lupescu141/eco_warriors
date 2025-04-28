@@ -76,7 +76,7 @@ router.put(
   userPut
 );
 
-router.get("/profile-picture/:id", fetchUserPic);
+router.get("/profile-picture", authenticate, fetchUserPic);
 
 router
   .route("/profile-picture")

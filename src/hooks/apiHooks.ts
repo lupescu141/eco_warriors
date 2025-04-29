@@ -1,4 +1,5 @@
 import {
+  Comment,
   FullPost,
   MediaItemWithOwner,
   ProfilePic,
@@ -87,11 +88,18 @@ const useUser = () => {
     return tulos;
   };
 
+  const getUserById = async (id: number) => {
+    return await fetchData<UserWithNoPassword>(
+      import.meta.env.VITE_AUTH_API + "/users/" + id
+    );
+  };
+
   return {
     postRegister,
     getUserByToken,
     getUsernameAvailable,
     getEmailAvailable,
+    getUserById,
   };
 };
 export { useUser };
@@ -240,4 +248,56 @@ const useImage = () => {
   return { sendImage, getProfileImage, newImage };
 };
 
-export { usePost, useFile, useImage };
+// COMMENTS
+
+const useComment = () => {
+  const { getUserById } = useUser();
+
+  const getCommentsByPostId = async (post_id: number) => {
+    const comments = await fetchData<Comment[]>(
+      import.meta.env.VITE_POST_API + "/comments/bypost/" + post_id
+    );
+    // // Send a GET request to auth api and add username to all comments
+    const commentsWithUsername = await Promise.all<
+      Comment & { username: string }
+    >(
+      comments.map(async (comment) => {
+        const user = await getUserById(comment.user_id);
+        return { ...comment, username: user.username };
+      })
+    );
+    return commentsWithUsername;
+  };
+
+  // lähetä kommentti
+  const postComment = async (
+    comment: string,
+    post_id: number,
+    token: string
+  ) => {
+    const options = {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + token,
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({ post_id, comment }),
+    };
+    // return the data
+    return await fetchData<MessageResponse>(
+      import.meta.env.VITE_POST_API + "/comments",
+      options
+    );
+  };
+
+  // kommenttien määrä
+  // const getCommentCountByMediaId = async (id: number) => {
+  //   return await fetchData<{ count: number }>(
+  //     import.meta.env.VITE_MEDIA_API + "/comments/count/" + id
+  //   );
+  // };
+
+  return { postComment, getCommentsByPostId };
+};
+
+export { usePost, useFile, useImage, useComment };

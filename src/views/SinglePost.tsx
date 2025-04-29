@@ -49,7 +49,7 @@ const SinglePost = () => {
         <button onClick={() => navigate(-1)}>Go back</button>
 
         {/* COMMENTS */}
-        <Comments />
+        <Comments item={item} />
       </div>
     </>
   );

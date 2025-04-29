@@ -291,13 +291,13 @@ const useComment = () => {
   };
 
   // kommenttien määrä
-  // const getCommentCountByMediaId = async (id: number) => {
-  //   return await fetchData<{ count: number }>(
-  //     import.meta.env.VITE_MEDIA_API + "/comments/count/" + id
-  //   );
-  // };
+  const getCommentCountByMediaId = async (id: number) => {
+    return await fetchData<{ count: number }>(
+      import.meta.env.VITE_POST_API + "/comments/count/" + id
+    );
+  };
 
-  return { postComment, getCommentsByPostId };
+  return { postComment, getCommentsByPostId, getCommentCountByMediaId };
 };
 
 export { usePost, useFile, useImage, useComment };

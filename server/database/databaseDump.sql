@@ -64,7 +64,7 @@ CREATE TABLE `posts` (
 
 CREATE TABLE `comments` (
   `comment_id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  `user_id` INT(11) DEFAULT NULL UNIQUE,
+  `user_id` INT(11) DEFAULT NULL,
   `comment` VARCHAR(1500) DEFAULT NULL,
   `post_id` INT(11) DEFAULT NULL,
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -168,3 +168,11 @@ VALUES
 (1,2),
 (3,2),
 (3,3);
+
+-- Kommentti testi --- 
+
+INSERT INTO comments (user_id, comment, post_id)
+VALUES
+(1, 'Hyvää työtä puiston siivouksessa! Näyttää tosi siistiltä.', 3),
+(2, 'Tapahtuma kuulosti mielenkiintoiselta, harmi että en päässyt mukaan.', 3),
+(1, 'Onko tämä se puisto, joka oli tosi roskaantunut ennen?', 3);

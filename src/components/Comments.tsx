@@ -65,6 +65,8 @@ const Comments = () => {
           </Fragment>
         ))}
       </div>
+
+      {/* Kommentin lisäys formi */}
       <div className="add-comment-container">
         <form>
           <label htmlFor="comment">

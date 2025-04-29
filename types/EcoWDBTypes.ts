@@ -33,7 +33,6 @@ export type EventOrganizer = {
   password: string;
 };
 
-// NO server for posting exist yeat
 export type FullPost = {
   post_id: number;
   post_title: string;

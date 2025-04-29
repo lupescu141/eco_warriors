@@ -1,6 +1,7 @@
 import {
   FullPost,
   MediaItemWithOwner,
+  ProfilePic,
   UserWithNoPassword,
 } from "ecwtypes/EcoWDBTypes";
 import { fetchData } from "../lib/functions";
@@ -9,6 +10,7 @@ import {
   AvailableResponse,
   LoginResponse,
   MessageResponse,
+  Pfresposne,
   UploadResponse,
   UserResponse,
 } from "ecwtypes/MessageTypes.ts";
@@ -182,4 +184,60 @@ const useFile = () => {
   return { postFile };
 };
 
-export { usePost, useFile };
+const useImage = () => {
+  const sendImage = async (file: File, originFile: string, token: string) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    const options = {
+      method: "POST",
+      headers: { Authorization: "Bearer " + token },
+      body: formData,
+    };
+    return await fetchData<UploadResponse>(
+      import.meta.env.VITE_UPLOAD_API + "/picture/change/" + originFile,
+      options
+    );
+  };
+
+  const newImage = async (file: UploadResponse, token: string) => {
+    const item: Omit<ProfilePic, "user_id"> = {
+      filename: file.data.filename,
+      filetype: file.data.filetype,
+      filesize: file.data.filesize,
+    };
+    const options = {
+      method: "PUT",
+      headers: {
+        Authorization: "Bearer " + token,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(item),
+    };
+    return await fetchData<MessageResponse>(
+      import.meta.env.VITE_AUTH_API + "/users/profile-picture",
+      options
+    );
+  };
+
+  const getProfileImage = async (token: string) => {
+    try {
+      // hakee käyttäjän profiilikuvan
+      const options = {
+        method: "GET",
+        headers: { Authorization: "Bearer " + token },
+      };
+      const profileImage = await fetchData<Pfresposne>(
+        import.meta.env.VITE_AUTH_API + "/users/profile-picture",
+        options
+      );
+
+      return profileImage;
+    } catch (error) {
+      console.error((error as Error).message);
+    }
+  };
+
+  return { sendImage, getProfileImage, newImage };
+};
+
+export { usePost, useFile, useImage };

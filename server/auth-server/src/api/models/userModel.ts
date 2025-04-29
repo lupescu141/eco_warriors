@@ -138,7 +138,7 @@ const newPic = async (pic: ProfilePic) => {
 
 const getUserPic = async (user_id: number) => {
   const [rows] = await promisePool.execute<RowDataPacket[] & Pfresposne[]>(
-    `SELECT CONCAT(?, filename) AS filename FROM user_pic WHERE user_id=?`,
+    `SELECT filename as origin, CONCAT(?, filename) AS filename FROM user_pic WHERE user_id=?`,
     [uploadPath, user_id]
   );
 

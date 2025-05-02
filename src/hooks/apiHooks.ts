@@ -1,6 +1,7 @@
 import {
   Comment,
   FullPost,
+  Likes,
   MediaItemWithOwner,
   ProfilePic,
   UserWithNoPassword,
@@ -300,4 +301,63 @@ const useComment = () => {
   return { postComment, getCommentsByPostId, getCommentCountByMediaId };
 };
 
-export { usePost, useFile, useImage, useComment };
+// LIKES
+const useLike = () => {
+  const postLike = async (post_id: number, token: string) => {
+    // Send a POST request to /likes with object { media_id } and the token in the Authorization header.
+    const options = {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + token,
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({ post_id }),
+    };
+    // return the data
+    return await fetchData<MessageResponse>(
+      import.meta.env.VITE_POST_API + "/likes",
+      options
+    );
+  };
+
+  const deleteLike = async (like_id: number, token: string) => {
+    // Send a DELETE request to /likes/:like_id with the token in the Authorization header.
+    const options = {
+      method: "DELETE",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+    // return the data
+    return await fetchData<MessageResponse>(
+      import.meta.env.VITE_POST_API + "/likes/" + like_id,
+      options
+    );
+  };
+
+  // Tykkäyksien määrä
+  const getCountByMediaId = async (post_id: number) => {
+    // Send a GET request to /likes/count/:media_id to get the number of likes.
+    return await fetchData<{ count: number }>(
+      import.meta.env.VITE_POST_API + "/likes/count/" + post_id
+    );
+  };
+
+  const getUserLike = async (post_id: number, token: string) => {
+    // Send a GET request to /likes/bymedia/user/:media_id to get the user's like on the media. -> tarvitaan options koska haetaan tietyn käyttäjän
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+    return await fetchData<Likes>(
+      import.meta.env.VITE_Post_API + "/likes/bypost/user/" + post_id,
+      options
+    );
+  };
+
+  return { postLike, deleteLike, getCountByMediaId, getUserLike };
+};
+
+export { usePost, useFile, useImage, useComment, useLike };

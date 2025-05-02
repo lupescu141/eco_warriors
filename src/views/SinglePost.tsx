@@ -5,13 +5,13 @@ import "../styles/Posts.css";
 import { faCircleUser, faClock } from "@fortawesome/free-solid-svg-icons";
 import Comments from "../components/Comments";
 import { MediaItemWithOwner } from "ecwtypes/EcoWDBTypes";
+import Likes from "../components/Likes";
 
 const SinglePost = () => {
   const navigate: NavigateFunction = useNavigate();
   const { state } = useLocation();
   const item: MediaItemWithOwner = state.item;
 
-  // console.log("löytyykä", item);
   if (!item) {
     return <div>Error!</div>;
   }
@@ -47,6 +47,9 @@ const SinglePost = () => {
         </div>
 
         <button onClick={() => navigate(-1)}>Go back</button>
+
+        {/*LIKES*/}
+        <Likes item={item} />
 
         {/* COMMENTS */}
         <Comments item={item} />

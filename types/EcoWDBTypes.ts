@@ -104,6 +104,8 @@ export type Tasks = {
   task_description: string;
   points: number;
   level: number;
+  month: number;
+  year: number;
 };
 
 export type UserTask = {

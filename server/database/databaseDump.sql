@@ -102,7 +102,9 @@ CREATE TABLE `tasks`(
   `task_title` VARCHAR(100) NOT NULL,
   `task_description` VARCHAR(1000) NOT NULL,
   `points` INT(11) NOT NULL DEFAULT 0,
-  `level` INT NOT NULL CHECK (level BETWEEN 1 AND 3)
+  `level` INT NOT NULL DEFAULT 1 CHECK (level BETWEEN 1 AND 3),
+  `month` INT NOT NULL DEFAULT 1 CHECK (level BETWEEN 1 AND 12),
+  `year` INT(11) NOT NULL DEFAULT 2025
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- TASK w User liitäntätaulukko WIP
@@ -129,12 +131,6 @@ INSERT INTO users (user_id, username, email, password)
   (1, 'testi', 'testi@example.com', 'testi'),
   (2, 'oppilas', 'o@example.com', 'salasana123');
 
--- Test User with task
-
--- INSERT INTO tasks (task_title, task_description, completed, active, points, level, user_id) 
--- VALUES 
---   ('Kerää roskia', 'Kerää roskia puistosta ja lajittele asianmukaisesti', FALSE, TRUE, 50, 1, 1),
---   ('Säästä sähköä tunnin ajan', 'Laita sähkölaitteet kiinni tunniksi', FALSE, FALSE, 50, 2, 1);
 
 INSERT INTO tasks (task_id, task_title, task_description, points, level) 
 VALUES 

@@ -50,7 +50,7 @@ const Navbar = () => {
       setImage(image);
     };
     getImage();
-  }, []);
+  }, [user]);
 
   return (
     <>

@@ -8,11 +8,19 @@ import { useComment, useImage } from "../hooks/apiHooks";
 import { Pfresposne } from "ecwtypes/MessageTypes";
 import { useUserContext } from "../hooks/contextHooks";
 
-const Comments = ({ item }: { item: MediaItemWithOwner }) => {
+type CommentProps = {
+  item: MediaItemWithOwner;
+  deleteComment: (commentId: number) => void;
+};
+
+const Comments = (props: CommentProps) => {
   const { user } = useUserContext();
-  const { getCommentsByPostId, postComment } = useComment();
+  const { getCommentsByPostId, postComment, deleteCommentbyID } = useComment();
   // kommentit zustand storesta
   const { comments, setComments } = useCommentStore();
+
+  // props props: CommentsProps
+  const { item, deleteComment } = props;
 
   // profiilikuvaa varten
   const { getProfileImage } = useImage();
@@ -21,6 +29,7 @@ const Comments = ({ item }: { item: MediaItemWithOwner }) => {
     filename: "default",
     message: "default",
   });
+
   // kommenttien määrä
   const { getCommentCountByMediaId } = useComment();
   const [commentCount, setCommentCount] = useState(0);
@@ -36,9 +45,6 @@ const Comments = ({ item }: { item: MediaItemWithOwner }) => {
 
   useEffect(() => {
     getCommentCount();
-  }, [item]);
-
-  useEffect(() => {
     getComments();
   }, [item]);
 
@@ -48,6 +54,23 @@ const Comments = ({ item }: { item: MediaItemWithOwner }) => {
       setComments(comments);
     } catch (error) {
       setComments([]);
+      console.error((error as Error).message);
+    }
+  };
+
+  // poisto
+  const handleDelete = async (commentId: number) => {
+    const token = localStorage.getItem("token");
+    try {
+      if (!token) {
+        return;
+      }
+      await deleteCommentbyID(commentId, token);
+      console.log("comment deleted", commentId);
+      deleteComment(commentId);
+      getCommentCount();
+      getComments();
+    } catch (error) {
       console.error((error as Error).message);
     }
   };
@@ -101,18 +124,33 @@ const Comments = ({ item }: { item: MediaItemWithOwner }) => {
           <Fragment key={comment.comment_id}>
             <div className="single-container">
               <div className="comment-header">
-                {user && (
-                  <img
-                    className="profileImg"
-                    src={imageItem.filename}
-                    alt="Profile picture"
-                  ></img>
-                )}
-                <div className="username-time">
-                  <h3>{comment.username}</h3>
-                  <p>{new Date(comment.created_at || "").toLocaleString()}</p>
+                <div className="user-info">
+                  <div className="profile-pic">
+                    <img
+                      className="profileImg"
+                      src={comment.profile}
+                      alt="Profile picture"
+                    ></img>
+                  </div>
+
+                  <div className="username-time">
+                    <h3>{comment.username}</h3>
+                    <p>{new Date(comment.created_at || "").toLocaleString()}</p>
+                  </div>
                 </div>
+                {/* DELETE */}
+                {user && user.user_id === comment.user_id && (
+                  <button
+                    className="close delete-comment"
+                    onClick={() =>
+                      comment.comment_id && handleDelete(comment.comment_id)
+                    }
+                  >
+                    x
+                  </button>
+                )}
               </div>
+
               <div className="comment">
                 <p>{comment.comment}</p>
               </div>

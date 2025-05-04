@@ -105,6 +105,8 @@ const useUser = () => {
 };
 export { useUser };
 
+// POSTS
+
 const usePost = () => {
   const [postArray, setMediaArray] = useState<MediaItemWithOwner[]>([]);
   useEffect(() => {
@@ -173,7 +175,21 @@ const usePost = () => {
       options
     );
   };
-  return { postArray, newPost };
+
+  const deletePostbyID = async (post_id: number, token: string) => {
+    const options = {
+      method: "DELETE",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+    return await fetchData<MessageResponse>(
+      import.meta.env.VITE_POST_API + "/post/" + post_id,
+      options
+    );
+  };
+
+  return { postArray, newPost, deletePostbyID };
 };
 
 const useFile = () => {
@@ -298,7 +314,26 @@ const useComment = () => {
     );
   };
 
-  return { postComment, getCommentsByPostId, getCommentCountByMediaId };
+  // delete comment
+  const deleteCommentbyID = async (comment_id: number, token: string) => {
+    const options = {
+      method: "DELETE",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+    return await fetchData<MessageResponse>(
+      import.meta.env.VITE_POST_API + "/comments/" + comment_id,
+      options
+    );
+  };
+
+  return {
+    postComment,
+    getCommentsByPostId,
+    getCommentCountByMediaId,
+    deleteCommentbyID,
+  };
 };
 
 // LIKES
@@ -352,7 +387,7 @@ const useLike = () => {
       },
     };
     return await fetchData<Likes>(
-      import.meta.env.VITE_Post_API + "/likes/bypost/user/" + post_id,
+      import.meta.env.VITE_POST_API + "/likes/bypost/user/" + post_id,
       options
     );
   };

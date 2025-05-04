@@ -67,7 +67,7 @@ CREATE TABLE `comments` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 CREATE TABLE `Likes` (
-  `like_id` INT(11) NOT NULL PRIMARY KEY,
+  `like_id` INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `post_id` INT(11) NOT NULL,
   `user_id` INT(11) NOT NULL,
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

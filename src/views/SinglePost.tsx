@@ -2,7 +2,11 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { NavigateFunction } from "react-router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "../styles/Posts.css";
-import { faCircleUser, faClock } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowLeft,
+  faCircleUser,
+  faClock,
+} from "@fortawesome/free-solid-svg-icons";
 import Comments from "../components/Comments";
 import { MediaItemWithOwner } from "ecwtypes/EcoWDBTypes";
 import Likes from "../components/Likes";
@@ -22,7 +26,13 @@ const SinglePost = () => {
         <h1>Posts</h1>
         <h2>{item.post_title}</h2>
       </div>
-      <hr style={{ width: "90vw", margin: "auto", backgroundColor: "red" }} />
+      <hr style={{ width: "90vw", margin: "auto" }} />
+      <div className="back-btn-container">
+        <button className="go-back" onClick={() => navigate(-1)}>
+          <FontAwesomeIcon icon={faArrowLeft} />
+        </button>
+      </div>
+
       <div className="single-post-container">
         <img
           src={"https://placehold.co/300x200@2x/light-grey/white/png?text=IMG"}
@@ -46,13 +56,16 @@ const SinglePost = () => {
           <span>Eco-friendly</span>
         </div>
 
-        <button onClick={() => navigate(-1)}>Go back</button>
-
         {/*LIKES*/}
         <Likes item={item} />
 
         {/* COMMENTS */}
-        <Comments item={item} />
+        <Comments
+          item={item}
+          deleteComment={(commentId) =>
+            console.log(`Delete comment with ID: ${commentId}`)
+          }
+        />
       </div>
     </>
   );

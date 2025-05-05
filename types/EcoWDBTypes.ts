@@ -54,14 +54,6 @@ export type FullPost = {
   created_at: Date | string;
 };
 
-export type Comments = {
-  comment_id: number;
-  user_id: string;
-  comment: string;
-  post_id: number;
-  created_at: Date;
-};
-
 // will be implemented later
 export type Top10 = {
   id: number;
@@ -84,11 +76,20 @@ export type MediaItemWithOwner = FullPost & Pick<User, "username">;
 
 export type TagResult = PostItemTag & Tag;
 
+// export type Comment = {
+//   comment_id: number;
+//   post_id: number;
+//   user_id: number;
+//   text: string;
+// };
 export type Comment = {
   comment_id: number;
-  post_id: number;
   user_id: number;
-  text: string;
+  post_id: number;
+  comment: string;
+  username: string;
+  profile: string;
+  created_at: string;
 };
 
 export type Likes = {

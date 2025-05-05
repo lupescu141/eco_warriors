@@ -1,9 +1,16 @@
 import AllPosts from "../components/AllPosts";
+// import { MediaItemWithOwner } from "ecwtypes/EcoWDBTypes";
 import "../styles/Posts.css";
+// import { useState } from "react";
 import { usePost } from "../hooks/apiHooks";
 import { useUserContext } from "../hooks/contextHooks";
 
 const MyPostsView = () => {
+  // const [SelectedItem, setSelectedItem] = useState<
+  //   MediaItemWithOwner | undefined
+  // >(undefined);
+  // console.log(SelectedItem);
+
   const { postArray } = usePost();
   const { user } = useUserContext();
 
@@ -17,17 +24,13 @@ const MyPostsView = () => {
       </div>
       <hr style={{ width: "90vw", margin: "auto" }} />
 
-
-      {[...postArray]
-        .reverse()
-        .map(
-          (post) =>
-            user &&
-            user.user_id === post.user_id && (
-              <AllPosts key={post.post_id} post={post}deleteMedia={() => {}}  />
-            )
-        )}
-
+      {postArray.map(
+        (post) =>
+          user &&
+          user.user_id === post.user_id && (
+            <AllPosts key={post.post_id} item={post} deleteMedia={() => {}} />
+          )
+      )}
     </>
   );
 };

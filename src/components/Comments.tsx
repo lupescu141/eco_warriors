@@ -160,7 +160,11 @@ const Comments = (props: CommentProps) => {
         ))}
       </div>
 
+<<<<<<< post-be
+      {/* Kommentin lisäys formi */}
+=======
       {/* KOMMENTIN FORMI */}
+>>>>>>> project_start
       <div className="add-comment-container">
         <form onSubmit={handleSubmit}>
           <label htmlFor="comment">

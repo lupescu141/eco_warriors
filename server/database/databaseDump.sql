@@ -105,7 +105,7 @@ CREATE TABLE `tasks`(
   `level` INT NOT NULL CHECK (level BETWEEN 1 AND 3)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- TASK w User liitäntätaulukko WIP
+-- TASK w User liitäntätaulukko
 
 CREATE TABLE `user_task` (
   `task_id` INT NOT NULL,
@@ -131,10 +131,6 @@ INSERT INTO users (user_id, username, email, password)
 
 -- Test User with task
 
--- INSERT INTO tasks (task_title, task_description, completed, active, points, level, user_id) 
--- VALUES 
---   ('Kerää roskia', 'Kerää roskia puistosta ja lajittele asianmukaisesti', FALSE, TRUE, 50, 1, 1),
---   ('Säästä sähköä tunnin ajan', 'Laita sähkölaitteet kiinni tunniksi', FALSE, FALSE, 50, 2, 1);
 
 INSERT INTO tasks (task_id, task_title, task_description, points, level) 
 VALUES 
@@ -167,3 +163,11 @@ VALUES
 (1,2),
 (3,2),
 (3,3);
+
+-- Kommentti testi --- 
+
+INSERT INTO comments (user_id, comment, post_id)
+VALUES
+(1, 'Hyvää työtä puiston siivouksessa! Näyttää tosi siistiltä.', 3),
+(2, 'Tapahtuma kuulosti mielenkiintoiselta, harmi että en päässyt mukaan.', 3),
+(1, 'Onko tämä se puisto, joka oli tosi roskaantunut ennen?', 3);

@@ -16,6 +16,10 @@
   background-color: var(--dark-green) !important;
 }
 
+body:has(.upload-modal, .popup-overlay) {
+  overflow: hidden;
+
+
 button {
   height: 3rem;
   width: 8rem;

@@ -88,6 +88,11 @@ const useUser = () => {
     );
     return tulos;
   };
+  const getUserById = async (id: number) => {
+    return await fetchData<UserWithNoPassword>(
+      import.meta.env.VITE_AUTH_API + "/users/" + id
+    );
+  };
 
   const getUserById = async (id: number) => {
     return await fetchData<UserWithNoPassword>(
@@ -209,6 +214,7 @@ const useFile = () => {
   return { postFile };
 };
 
+
 const useImage = () => {
   const sendImage = async (file: File, originFile: string, token: string) => {
     const formData = new FormData();
@@ -265,6 +271,7 @@ const useImage = () => {
   return { sendImage, getProfileImage, newImage };
 };
 
+
 // COMMENTS
 
 const useComment = () => {
@@ -306,7 +313,6 @@ const useComment = () => {
       options
     );
   };
-
   // kommenttien määrä
   const getCommentCountByMediaId = async (id: number) => {
     return await fetchData<{ count: number }>(
@@ -396,3 +402,4 @@ const useLike = () => {
 };
 
 export { usePost, useFile, useImage, useComment, useLike };
+

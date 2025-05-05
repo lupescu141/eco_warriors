@@ -36,6 +36,20 @@
 .home-content p {
   line-height: 1.2em;
 }
+.home-content p:last-child {
+  padding: 0.5em;
+  text-align: center;
+  font-size: 1.5em;
+}
+#join-now-span {
+  font-weight: bolder;
+  color: var(--light-green);
+  cursor: pointer;
+}
+#join-now-span:hover {
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}
 
 .home-subtitle {
   font-size: 1.75rem;

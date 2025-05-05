@@ -32,6 +32,7 @@ const Posts = () => {
 
       {[...postItems].reverse().map((post) => (
         <AllPosts key={post.post_id} item={post} deleteMedia={handleDelete} />
+
       ))}
     </>
   );

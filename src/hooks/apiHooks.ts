@@ -88,7 +88,6 @@ const useUser = () => {
     );
     return tulos;
   };
-
   const getUserById = async (id: number) => {
     return await fetchData<UserWithNoPassword>(
       import.meta.env.VITE_AUTH_API + "/users/" + id
@@ -306,7 +305,6 @@ const useComment = () => {
       options
     );
   };
-
   // kommenttien määrä
   const getCommentCountByMediaId = async (id: number) => {
     return await fetchData<{ count: number }>(

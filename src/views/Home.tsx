@@ -1,7 +1,15 @@
 import "./home.css";
 import NewestPosts from "../components/NewestPosts";
+import LoginRegisterPopup from "../components/LoginRegisterPopup";
+import { useState } from "react";
 
 const Home = () => {
+  /* Modal state*/
+  const [popupType, setPopupType] = useState<"login" | "register" | null>(null);
+  /* Opens login modal */
+  const handlePopupType = () => {
+    setPopupType("register");
+  };
   return (
     <>
       {" "}
@@ -56,21 +64,28 @@ const Home = () => {
           <p>
             ECO Warriors turns everyday climate actions into an exciting
             journey. Together, we can help build a more sustainable future, one
-            task at a time. Join now and be a part of the change! 💚♻️
+            task at a time.{" "}
+          </p>
+          <p id="join-now-text">
+            <span id="join-now-span" onClick={handlePopupType}>
+              Join now
+            </span>{" "}
+            and be a part of the change! 💚♻️
           </p>
         </div>
 
+        {popupType && (
+          <LoginRegisterPopup
+            type={popupType}
+            onClose={() => setPopupType(null)}
+            onSwitch={() =>
+              setPopupType(popupType === "login" ? "register" : "login")
+            }
+          />
+        )}
+
         {/* Newest Posts - Row of Images */}
         <div className="newest-posts">
-          {/* <h3>Newest Posts</h3>
-        <div className="image-row">
-          <div className="image-placeholder"></div>
-          <div className="image-placeholder"></div>
-          <div className="image-placeholder"></div>
-          <div className="image-placeholder"></div>
-          <div className="image-placeholder"></div>
-        </div> */}
-
           <NewestPosts />
         </div>
 

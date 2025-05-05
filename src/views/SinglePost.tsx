@@ -34,9 +34,7 @@ const SinglePost = () => {
       </div>
 
       <div className="single-post-container">
-        <img
-          src={"https://placehold.co/300x200@2x/light-grey/white/png?text=IMG"}
-        ></img>
+        <img src={item.filename} alt={item.post_title}></img>
         <h2>{item.post_title}</h2>
         <div className="datetime-user-container">
           <div className="datetime-user">

@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs";
 import { NextFunction, Request, Response } from "express";
 import CustomError from "../../classes/CustomError";
 import { LoginResponse } from "ecwtypes/MessageTypes";
-import { TokenContent, User } from "ecwtypes/EcoWDBTypes";
+import { Admin, TokenContent } from "ecwtypes/EcoWDBTypes";
 import { getAdminByUsername } from "../models/adminModel";
 
 const login = async (
@@ -13,9 +13,9 @@ const login = async (
 ) => {
   try {
     const { username, password } = req.body;
-    const user = await getAdminByUsername(username);
+    const admin = await getAdminByUsername(username);
 
-    if (!user || !bcrypt.compareSync(password, user.password)) {
+    if (!admin || !bcrypt.compareSync(password, admin.password)) {
       next(new CustomError("Incorrect username/password", 403));
       return;
     }
@@ -25,15 +25,15 @@ const login = async (
       return;
     }
 
-    const outUser: Omit<User, "password"> = {
-      user_id: user.user_id,
-      username: user.username,
-      email: user.email,
-      created_at: user.created_at,
+    const outUser: Omit<Admin, "password"> = {
+      admin_id: admin.admin_id,
+      username: admin.username,
+      email: admin.email,
+      created_at: admin.created_at,
     };
 
     const tokenContent: TokenContent = {
-      user_id: user.user_id,
+      user_id: admin.admin_id,
     };
 
     const token = jwt.sign(tokenContent, process.env.JWT_SECRET);
@@ -41,7 +41,7 @@ const login = async (
     res.json({
       message: "Login successful",
       token,
-      user: outUser,
+      admin: outUser,
     });
   } catch (error) {
     next(error);

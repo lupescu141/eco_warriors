@@ -1,9 +1,12 @@
 import express from "express";
 
-import { validationErrors } from "../../middlewares";
+import { authenticate, validationErrors } from "../../middlewares";
 import { body, param } from "express-validator";
 import {
-  newPost,
+  getTaskByMonth,
+  newTask,
+  removeTaskSelect,
+  selectTask,
   taskListGet,
   updateTask,
 } from "../controllers/taskController";
@@ -36,11 +39,17 @@ router
     body("month").notEmpty().isInt({ min: 1, max: 12 }).toInt(),
     body("year").notEmpty().isInt({ min: 2024 }).toInt(),
     validationErrors,
-    newPost
+    newTask
   );
 
+router.route("/:id");
 router
-  .route("/update/:id")
+  .route("/:id")
+  .get(
+    param("id").isInt({ min: 1 }).toInt(),
+    validationErrors
+    /* ADD getTasksById HERE */
+  )
   .put(
     body("task_title")
       .optional()
@@ -62,12 +71,30 @@ router
     body("year").optional().notEmpty().isInt({ min: 2024 }).toInt(),
     validationErrors,
     updateTask
+  )
+  .delete(param("id").isInt({ min: 1 }).toInt(), validationErrors);
+
+router
+  .route("/month/:month")
+  .get(
+    param("month").isInt({ min: 1 }).toInt(),
+    validationErrors,
+    getTaskByMonth
   );
 
-router.route("/:id").get(
-  param("id").isInt({ min: 1 }).toInt(),
-  validationErrors
-  /* ADD getTasksById HERE */
-);
+router
+  .route("/select/:id")
+  .post(
+    authenticate,
+    param("id").isInt({ min: 1 }).toInt(),
+    validationErrors,
+    selectTask
+  )
+  .delete(
+    authenticate,
+    param("id").isInt({ min: 1 }).toInt(),
+    validationErrors,
+    removeTaskSelect
+  );
 
 export default router;

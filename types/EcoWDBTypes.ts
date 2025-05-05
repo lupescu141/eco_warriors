@@ -31,7 +31,10 @@ export type Admin = {
   username: string;
   email: string;
   password: string;
+  created_at: Date | string;
 };
+
+export type AdminWithNoPassword = Omit<Admin, "password">;
 
 export type EventOrganizer = {
   organizer_id: number;

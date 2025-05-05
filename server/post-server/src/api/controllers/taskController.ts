@@ -3,7 +3,10 @@ import { MessageResponse } from "ecwtypes/MessageTypes";
 import { Tasks, TokenContent } from "ecwtypes/EcoWDBTypes";
 import {
   deleteTask,
+  deleteTaskSelect,
   fetchAllTasks,
+  fetchTasksByMonth,
+  insertUserTask,
   postTask,
   taskPut,
 } from "../models/taskModel";
@@ -21,20 +24,21 @@ const taskListGet = async (
   }
 };
 
-/* const getTaskByMonth = async (
-  req: Request<{ month: number }, object, object>,
+const getTaskByMonth = async (
+  req: Request<{ month: string }, object, object>,
   res: Response<Tasks[]>,
   next: NextFunction
 ) => {
   try {
-    const tasks = await fetchTasksByMonth();
+    const year = new Date().getFullYear();
+    const tasks = await fetchTasksByMonth(Number(req.params.month), year);
     res.json(tasks);
   } catch (error) {
     next(error);
   }
-}; */
+};
 
-const newPost = async (
+const newTask = async (
   req: Request<
     object,
     object,
@@ -91,4 +95,44 @@ const taskDelete = async (
   }
 };
 
-export { taskListGet, newPost, updateTask, taskDelete };
+const selectTask = async (
+  req: Request<{ id: string }>,
+  res: Response<MessageResponse>,
+  next: NextFunction
+) => {
+  try {
+    const result = await insertUserTask(
+      res.locals.user.user_id,
+      Number(req.params.id)
+    );
+    res.json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const removeTaskSelect = async (
+  req: Request<{ id: string }>,
+  res: Response<MessageResponse>,
+  next: NextFunction
+) => {
+  try {
+    const result = await deleteTaskSelect(
+      res.locals.user.user_id,
+      Number(req.params.id)
+    );
+    res.json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export {
+  taskListGet,
+  newTask,
+  updateTask,
+  taskDelete,
+  getTaskByMonth,
+  selectTask,
+  removeTaskSelect,
+};

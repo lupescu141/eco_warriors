@@ -17,15 +17,17 @@ const MyPostsView = () => {
       </div>
       <hr style={{ width: "90vw", margin: "auto" }} />
 
+
       {[...postArray]
         .reverse()
         .map(
           (post) =>
             user &&
             user.user_id === post.user_id && (
-              <AllPosts key={post.post_id} post={post} />
+              <AllPosts key={post.post_id} post={post}deleteMedia={() => {}}  />
             )
         )}
+
     </>
   );
 };

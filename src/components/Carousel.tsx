@@ -20,12 +20,13 @@ const Carousel = ({ players }: { players: Player[] }) => {
       </button>
 
       <div className="carousel-wrapper" style={{ transform: `translateX(-${current * 100}%)` }}>
-        {players.map((player) => (
+        {players.map((player, index) => (
           <div className="carousel-card" key={player.id}>
             <div className="laurel-wrapper">
               <img src="/laurel.png" alt="Laurel" className="laurel" />
               <img src={player.avatar} alt={player.name} className="avatar" />
             </div>
+            <div className="carousel-rank">{index + 1}.</div>
             <h3>{player.name}</h3>
           </div>
         ))}

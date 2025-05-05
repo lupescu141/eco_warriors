@@ -48,6 +48,13 @@
     z-index: 1;
   }
   
+  .carousel-rank {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 0.5rem 0;
+  }
+  
+
   .avatar {
     border-radius: 50%;
     width: 100px;

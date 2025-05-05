@@ -14,6 +14,34 @@ const fetchAllTasks = async (): Promise<Tasks[]> => {
   return rows;
 };
 
+////
+const fetchUserTasks = async (userId: number): Promise<Tasks[]> => {
+  const [rows] = await promisePool.execute<RowDataPacket[] & Tasks[]>(
+    `
+    SELECT 
+      t.task_id,
+      t.task_title AS title,
+      t.task_description AS description,
+      t.points,
+      t.level,
+      t.month,
+      t.year,
+      ut.completed,
+      ut.active
+    FROM tasks t
+    JOIN user_task ut ON t.task_id = ut.task_id
+    WHERE ut.user_id = ?
+    `,
+    [userId]
+  );
+
+  if (!rows || rows.length === 0) {
+    throw new CustomError("No tasks found for user", 404);
+  }
+
+  return rows;
+};
+
 const fetchTasksByMonth = async (
   month: number,
   year: number
@@ -141,4 +169,5 @@ export {
   insertUserTask,
   deleteTaskSelect,
   updateTaskSelection,
+  fetchUserTasks,
 };

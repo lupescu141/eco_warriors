@@ -9,6 +9,7 @@ import {
   selectTask,
   taskListGet,
   updateTask,
+  userTaskListGet,
 } from "../controllers/taskController";
 
 const router = express.Router();
@@ -17,6 +18,16 @@ router
   .route("/") // route is ...:3002/api/tasks/
   // Gets all tasks
   .get(taskListGet);
+
+///
+router.get(
+  "/user-tasks/:userId",
+  [
+    param("userId").isInt({ min: 1 }).withMessage("Invalid user ID"), // validointi
+    validationErrors,
+  ],
+  userTaskListGet
+);
 
 // Adds new tasks
 router

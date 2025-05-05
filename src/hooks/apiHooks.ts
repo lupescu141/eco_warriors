@@ -252,10 +252,10 @@ const useTasks = () => {
       console.error((error as Error).message);
     }
   };
-  const getUserTasks = async () => {
+  const getUserTasks = async (userId: number) => {
     try {
       const tasks = await fetchData<Tasks[]>(
-        import.meta.env.VITE_POST_API + "/tasks"
+        `${import.meta.env.VITE_POST_API}/tasks/user-tasks/${userId}`
       );
       return tasks;
     } catch (error) {

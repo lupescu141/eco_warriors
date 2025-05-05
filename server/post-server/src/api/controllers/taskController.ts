@@ -9,6 +9,7 @@ import {
   insertUserTask,
   postTask,
   taskPut,
+  fetchUserTasks,
 } from "../models/taskModel";
 
 const taskListGet = async (
@@ -18,6 +19,21 @@ const taskListGet = async (
 ) => {
   try {
     const tasks = await fetchAllTasks();
+    res.json(tasks);
+  } catch (error) {
+    next(error);
+  }
+};
+
+///
+const userTaskListGet = async (
+  req: Request,
+  res: Response<Tasks[]>,
+  next: NextFunction
+) => {
+  try {
+    const userId = Number(req.params.userId);
+    const tasks = await fetchUserTasks(userId);
     res.json(tasks);
   } catch (error) {
     next(error);
@@ -135,4 +151,5 @@ export {
   getTaskByMonth,
   selectTask,
   removeTaskSelect,
+  userTaskListGet,
 };

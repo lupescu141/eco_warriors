@@ -117,3 +117,7 @@ export type UserTask = {
   complete: boolean;
   active: boolean;
 };
+
+///
+
+export type TaskWithUser = Tasks & UserTask;

@@ -1,4 +1,4 @@
-import express from 'express';
+import express from "express";
 import {
   commentListGet,
   commentListByPostIdGet,
@@ -8,74 +8,69 @@ import {
   commentPost,
   commentPut,
   commentDelete,
-} from '../controllers/commentController';
-import {authenticate, validationErrors} from '../../middlewares';
-import {body, param} from 'express-validator';
+} from "../controllers/commentController";
+import { authenticate, validationErrors } from "../../middlewares";
+import { body, param } from "express-validator";
 
 const router = express.Router();
 
 router
-  .route('/') // route is ...:3002/api/comments/
+  .route("/") // route is ...:3002/api/comments/
   // Gets all comments
   .get(commentListGet)
   // Posts a new comments
   .post(
     authenticate,
-    body('comment_text')
-      .trim()
-      .notEmpty()
-      .isString()
-      .isLength({min: 1})
-      .escape(),
-    body('post_id').notEmpty().isInt({min: 1}).toInt(),
+    body("comment").trim().notEmpty().isString().isLength({ min: 1 }).escape(),
+    body("post_id").notEmpty().isInt({ min: 1 }).toInt(),
     validationErrors,
-    commentPost,
+    commentPost
   );
 
 // Gets all comments in a post
 router
-  .route('/bypost/:id')
+  .route("/bypost/:id")
   .get(
-    param('id').isInt({min: 1}).toInt(),
+    param("id").isInt({ min: 1 }).toInt(),
     validationErrors,
-    commentListByPostIdGet,
+    commentListByPostIdGet
   );
 
 // Gets users all comments
-router.route('/byuser').get(authenticate, commentListByUserGet);
+router.route("/byuser").get(authenticate, commentListByUserGet);
 
 // Gets the number of comments in a post
 router
-  .route('/count/:id')
+  .route("/count/:id")
   .get(
-    param('id').isInt({min: 1}).toInt(),
+    param("id").isInt({ min: 1 }).toInt(),
     validationErrors,
-    commentCountByPostIdGet,
+    commentCountByPostIdGet
   );
 
 router
-  .route('/:id')
+  .route("/:id")
   // Gets specific comment by comment id
-  .get(param('id').isInt({min: 1}).toInt(), validationErrors, commentGet)
+  .get(param("id").isInt({ min: 1 }).toInt(), validationErrors, commentGet)
   // Edists comment
   .put(
     authenticate,
-    param('id').isInt({min: 1}).toInt(),
-    body('comment_text')
+    param("id").isInt({ min: 1 }).toInt(),
+    body("comment_text")
       .trim()
       .notEmpty()
       .isString()
-      .isLength({min: 1})
+      .isLength({ min: 1 })
       .escape(),
     validationErrors,
-    commentPut,
+    commentPut
   )
   // Deletes comment
   .delete(
     authenticate,
-    param('id').isInt({min: 1}).toInt(),
+    param("id").isInt({ min: 1 }).toInt(),
     validationErrors,
-    commentDelete,
+    commentDelete
   );
 
 export default router;

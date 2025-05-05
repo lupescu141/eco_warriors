@@ -3,7 +3,12 @@
 import { NextFunction, Request, Response } from "express";
 import CustomError from "../../classes/CustomError";
 import bcrypt from "bcryptjs";
-import { UserDeleteResponse, UserResponse } from "ecwtypes/MessageTypes";
+import {
+  MessageResponse,
+  Pfresposne,
+  UserDeleteResponse,
+  UserResponse,
+} from "ecwtypes/MessageTypes";
 import {
   createUser,
   deleteUser,
@@ -11,9 +16,16 @@ import {
   getUserByEmail,
   getUserById,
   getUserByUsername,
+  getUserPic,
   modifyUser,
+  newPic,
 } from "../models/userModel";
-import { TokenContent, User, UserWithNoPassword } from "ecwtypes/EcoWDBTypes";
+import {
+  ProfilePic,
+  TokenContent,
+  User,
+  UserWithNoPassword,
+} from "ecwtypes/EcoWDBTypes";
 
 //////
 // TODO: check for inacuracys
@@ -103,6 +115,38 @@ const userPut = async (
       user: result,
     };
     res.json(response);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const userPic = async (
+  req: Request<object, object, ProfilePic>,
+  res: Response<MessageResponse, { user: TokenContent }>,
+  next: NextFunction
+) => {
+  try {
+    req.body.user_id = res.locals.user.user_id;
+    await newPic(req.body);
+    res.json({ message: "Profile picture changed" });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const fetchUserPic = async (
+  req: Request<object, object, Pick<User, "user_id">>,
+  res: Response<Pfresposne, { user: TokenContent }>,
+  next: NextFunction
+) => {
+  try {
+    req.body.user_id = res.locals.user.user_id;
+    const response = await getUserPic(Number(req.body.user_id));
+    res.json({
+      message: "Profile picture fetched",
+      origin: response.origin,
+      filename: response.filename,
+    });
   } catch (error) {
     next(error);
   }
@@ -243,6 +287,8 @@ export {
   userGet,
   userPost,
   userPut,
+  userPic,
+  fetchUserPic,
   userDelete,
   userPutAsAdmin,
   userDeleteAsAdmin,

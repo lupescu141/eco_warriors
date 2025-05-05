@@ -12,14 +12,14 @@
 .comment-header {
   margin: 0.5em 0;
   display: flex;
-  gap: 0.5rem;
+  justify-content: space-between;
 }
 
 .profile-pic {
-  width: 50px;
-  height: 50px;
-  background-color: lightgray;
+  max-width: 50px;
+  max-height: 50px;
   border-radius: 4rem;
+  overflow: hidden;
 }
 .username-time {
   display: flex;
@@ -40,12 +40,6 @@ hr {
   padding: 0.5rem;
 }
 
-/* poista */
-/* input[type="text"] {
-  margin: 1rem 0;
-  padding: 0.5em;
-  width: 70%;
-} */
 .comment-textarea {
   margin: 1em 0;
   padding: 1em;
@@ -55,4 +49,13 @@ hr {
   border-radius: 4px;
   background-color: #f9f9f9;
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.delete-comments {
+  justify-self: flex-end;
+}
+.user-info {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
 }

@@ -1,9 +1,9 @@
-import {NextFunction, Request, Response} from 'express';
-import jwt from 'jsonwebtoken';
-import {validationResult} from 'express-validator';
-import CustomError from './classes/CustomError';
-import {ErrorResponse} from 'ecwtypes/MessageTypes';
-import {TokenContent} from 'ecwtypes/EcoWDBTypes';
+import { NextFunction, Request, Response } from "express";
+import jwt from "jsonwebtoken";
+import { validationResult } from "express-validator";
+import CustomError from "./classes/CustomError";
+import { ErrorResponse } from "ecwtypes/MessageTypes";
+import { TokenContent } from "ecwtypes/EcoWDBTypes";
 
 const notFound = (req: Request, res: Response, next: NextFunction) => {
   const error = new CustomError(`🔍 - Not Found - ${req.originalUrl}`, 404);
@@ -15,43 +15,43 @@ const errorHandler = (
   req: Request,
   res: Response<ErrorResponse>,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  next: NextFunction,
+  next: NextFunction
 ) => {
   const statusCode = err.status !== 200 ? err.status || 500 : 500;
   res.status(statusCode).json({
     message: err.message,
-    stack: process.env.NODE_ENV === 'production' ? '🥞' : err.stack,
+    stack: process.env.NODE_ENV === "production" ? "🥞" : err.stack,
   });
 };
 
 const authenticate = async (
   req: Request,
   res: Response,
-  next: NextFunction,
+  next: NextFunction
 ) => {
   try {
     const bearer = req.headers.authorization;
     if (!bearer) {
-      next(new CustomError('No token provided', 401));
+      next(new CustomError("No token provided", 401));
       return;
     }
 
-    const token = bearer.split(' ')[1];
+    const token = bearer.split(" ")[1];
 
     if (!token) {
-      next(new CustomError('No token provided', 401));
+      next(new CustomError("No token provided", 401));
       return;
     }
 
     const userFromToken = jwt.verify(
       token,
-      process.env.JWT_SECRET as string,
+      process.env.JWT_SECRET as string
     ) as TokenContent;
 
-    console.log('userFromToken', userFromToken);
+    console.log("userFromToken", userFromToken);
 
     if (!userFromToken) {
-      next(new CustomError('Token not valid', 403));
+      next(new CustomError("Token not valid", 403));
       return;
     }
 
@@ -69,15 +69,16 @@ const validationErrors = (req: Request, _res: Response, next: NextFunction) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     const messages: string = errors
-      .array({onlyFirstError: true})
+      .array({ onlyFirstError: true })
       .map(
-        (error) => `${error.msg}: ${(error as unknown as {path: string}).path}`, // type gymnastics because of express-validator type is not correct
+        (error) =>
+          `${error.msg}: ${(error as unknown as { path: string }).path}` // type gymnastics because of express-validator type is not correct
       )
-      .join(', ');
+      .join(", ");
     next(new CustomError(messages, 400));
     return;
   }
   next();
 };
 
-export {notFound, errorHandler, authenticate, validationErrors};
+export { notFound, errorHandler, authenticate, validationErrors };

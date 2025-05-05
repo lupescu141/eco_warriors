@@ -1,11 +1,11 @@
 import { ResultSetHeader, RowDataPacket } from "mysql2";
-import { Task } from "ecwtypes/EcoWDBTypes";
+import { Tasks } from "ecwtypes/EcoWDBTypes";
 import promisePool from "../../lib/db";
 import { MessageResponse } from "ecwtypes/MessageTypes";
 import CustomError from "../../classes/CustomError";
 
-const fetchAllTasks = async (): Promise<Task[]> => {
-  const [rows] = await promisePool.execute<RowDataPacket[] & Task[]>(
+const fetchAllTasks = async (): Promise<Tasks[]> => {
+  const [rows] = await promisePool.execute<RowDataPacket[] & Tasks[]>(
     "SELECT * FROM comments"
   );
   if (rows.length === 0) {

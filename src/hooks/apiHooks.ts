@@ -2,6 +2,7 @@ import {
   FullPost,
   MediaItemWithOwner,
   ProfilePic,
+  Tasks,
   UserWithNoPassword,
 } from "ecwtypes/EcoWDBTypes";
 import { fetchData } from "../lib/functions";
@@ -240,4 +241,28 @@ const useImage = () => {
   return { sendImage, getProfileImage, newImage };
 };
 
-export { usePost, useFile, useImage };
+const useTasks = () => {
+  const getTasks = async () => {
+    try {
+      const tasks = await fetchData<Tasks[]>(
+        import.meta.env.VITE_POST_API + "/tasks"
+      );
+      return tasks;
+    } catch (error) {
+      console.error((error as Error).message);
+    }
+  };
+  const getUserTasks = async () => {
+    try {
+      const tasks = await fetchData<Tasks[]>(
+        import.meta.env.VITE_POST_API + "/tasks"
+      );
+      return tasks;
+    } catch (error) {
+      console.error((error as Error).message);
+    }
+  };
+  return { getTasks, getUserTasks };
+};
+
+export { usePost, useFile, useImage, useTasks };

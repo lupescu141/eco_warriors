@@ -94,12 +94,6 @@ const useUser = () => {
     );
   };
 
-  const getUserById = async (id: number) => {
-    return await fetchData<UserWithNoPassword>(
-      import.meta.env.VITE_AUTH_API + "/users/" + id
-    );
-  };
-
   return {
     postRegister,
     getUserByToken,
@@ -214,7 +208,6 @@ const useFile = () => {
   return { postFile };
 };
 
-
 const useImage = () => {
   const sendImage = async (file: File, originFile: string, token: string) => {
     const formData = new FormData();
@@ -270,7 +263,6 @@ const useImage = () => {
 
   return { sendImage, getProfileImage, newImage };
 };
-
 
 // COMMENTS
 
@@ -402,4 +394,3 @@ const useLike = () => {
 };
 
 export { usePost, useFile, useImage, useComment, useLike };
-

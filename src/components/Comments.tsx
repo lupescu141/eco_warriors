@@ -4,8 +4,8 @@ import { useEffect, Fragment, useState, useRef } from "react";
 import { useCommentStore } from "../store";
 import { useForm } from "../hooks/formHooks";
 import { MediaItemWithOwner } from "ecwtypes/EcoWDBTypes";
-import { useComment, useImage } from "../hooks/apiHooks";
-import { Pfresposne } from "ecwtypes/MessageTypes";
+import { useComment /* useImage  */ } from "../hooks/apiHooks";
+/* import { Pfresposne } from "ecwtypes/MessageTypes"; */
 import { useUserContext } from "../hooks/contextHooks";
 
 type CommentProps = {
@@ -23,12 +23,12 @@ const Comments = (props: CommentProps) => {
   const { item, deleteComment } = props;
 
   // profiilikuvaa varten
-  const { getProfileImage } = useImage();
+  /*   const { getProfileImage } = useImage();
   const [imageItem, setImage] = useState<Pfresposne>({
     origin: "default",
     filename: "default",
     message: "default",
-  });
+  }); */
 
   // kommenttien määrä
   const { getCommentCountByMediaId } = useComment();
@@ -76,7 +76,7 @@ const Comments = (props: CommentProps) => {
   };
 
   // profiilikuva
-  useEffect(() => {
+  /*   useEffect(() => {
     const getImage = async () => {
       const token = localStorage.getItem("token");
       if (!token) return;
@@ -85,7 +85,7 @@ const Comments = (props: CommentProps) => {
       setImage(image);
     };
     getImage();
-  }, []);
+  }, []); */
 
   // kommentin lisäys
   const inputRef = useRef<HTMLInputElement | null>(null);

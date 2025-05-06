@@ -1,5 +1,9 @@
+import { Tasks } from "ecwtypes/EcoWDBTypes";
 import TaskList from "../components/TaskList";
+import Testi from "../components/Testi";
+import { useTasks } from "../hooks/apiHooks";
 import "../styles/Task.css";
+import { useEffect, useState } from "react";
 
 // MOCKDTA
 
@@ -48,6 +52,21 @@ type Task = {
 // Tehtävien näkymä
 
 const Tasks = () => {
+  /////
+  const [taskItems, setTaskItems] = useState<Tasks[]>([]);
+  // show task content
+  const { getTasks } = useTasks();
+
+  useEffect(() => {
+    const fetchTasks = async () => {
+      const tasks = await getTasks();
+      if (tasks) {
+        setTaskItems(tasks);
+      }
+    };
+    fetchTasks();
+  }, []);
+
   return (
     <>
       <div className="task-header-container">
@@ -57,6 +76,11 @@ const Tasks = () => {
       <div className="tasks">
         {tasks.map((task) => (
           <TaskList key={task.task_id} task={task} />
+        ))}
+      </div>
+      <div className="tasks">
+        {taskItems.map((task) => (
+          <Testi key={task.task_id} item={task} />
         ))}
       </div>
     </>

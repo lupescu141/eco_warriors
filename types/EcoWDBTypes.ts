@@ -31,7 +31,10 @@ export type Admin = {
   username: string;
   email: string;
   password: string;
+  created_at: Date | string;
 };
+
+export type AdminWithNoPassword = Omit<Admin, "password">;
 
 export type EventOrganizer = {
   organizer_id: number;
@@ -104,6 +107,8 @@ export type Tasks = {
   task_description: string;
   points: number;
   level: number;
+  month: number;
+  year: number;
 };
 
 export type UserTask = {
@@ -112,3 +117,7 @@ export type UserTask = {
   complete: boolean;
   active: boolean;
 };
+
+///
+
+export type TaskWithUser = Tasks & UserTask;

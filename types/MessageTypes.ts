@@ -1,4 +1,4 @@
-import { UserWithNoPassword } from "./EcoWDBTypes";
+import { AdminWithNoPassword, UserWithNoPassword } from "./EcoWDBTypes";
 import { FullPost } from "./EcoWDBTypes";
 
 type MessageResponse = {
@@ -14,6 +14,7 @@ type LoginResponse = MessageResponse & {
   token: string;
   message: string;
   user: UserWithNoPassword;
+  admin?: AdminWithNoPassword;
 };
 
 type UserResponse = MessageResponse & {

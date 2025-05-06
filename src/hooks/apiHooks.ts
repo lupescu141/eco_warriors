@@ -126,7 +126,7 @@ export const useTop100 = () => {
     const fetchTop100 = async () => {
       try {
         const players: Player[] = await fetchData(
-          import.meta.env.VITE_DB_API + '/leaderboard/top100'
+          import.meta.env.VITE_AUTH_API + '/leaderboard/top100'
         );
         setTop100(players);
       } catch (err) {
@@ -150,7 +150,7 @@ export const useTop10 = () => {
     const fetchTop10 = async () => {
       try {
         const players: Player[] = await fetchData(
-          import.meta.env.VITE_DB_API + '/leaderboard/top10'
+          import.meta.env.VITE_AUTH_API + '/leaderboard/top10'
         );
         setTop10(players);
       } catch (err) {

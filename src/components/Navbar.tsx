@@ -67,6 +67,9 @@ const Navbar = () => {
             <li>
               <Link to={"/posts"}>Posts</Link>
             </li>
+            <li>
+              <Link to={"/leaderboard"}>Leaderboard</Link>
+            </li>
           </ul>
         </div>
         <div

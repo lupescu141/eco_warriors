@@ -18,7 +18,7 @@ const getUserById = async (id: number): Promise<UserWithNoPassword> => {
   if (rows.length === 0) {
     throw new CustomError("User not found", 404);
   }
-  return rows[0];
+  return rows[0]; 
 };
 
 const getAllUsers = async (): Promise<UserWithNoPassword[]> => {
@@ -185,6 +185,32 @@ const deleteUser = async (id: number): Promise<UserDeleteResponse> => {
   }
 };
 
+const getTop100 = async () => {
+  const [rows] = await promisePool.execute<RowDataPacket[] & User[]>(
+    `SELECT user_id, username, points
+     FROM users ORDER BY points DESC LIMIT 100`
+  );
+  if (rows.length === 0) {
+    // Important change error content after debugging !!!!
+    /* throw new CustomError("Users not found", 404); */
+    return null;
+  }
+  return rows[0];
+};
+
+const getTop10 = async () => {
+  const [rows] = await promisePool.execute<RowDataPacket[] & User[]>(
+    `SELECT user_id, username, points
+     FROM top10 ORDER BY points DESC LIMIT 10`
+  );
+  if (rows.length === 0) {
+    // Important change error content after debugging !!!!
+    /* throw new CustomError("Users not found", 404); */
+    return null;
+  }
+  return rows[0];
+};
+
 export {
   getUserById,
   getAllUsers,
@@ -195,4 +221,6 @@ export {
   newPic,
   getUserPic,
   deleteUser,
+  getTop100,
+  getTop10,
 };

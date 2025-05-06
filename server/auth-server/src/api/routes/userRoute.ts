@@ -12,6 +12,8 @@ import {
   userPost,
   userPut,
   userPutAsAdmin,
+  top100Get,
+  top10Get,
 } from "../controllers/userController";
 import { authenticate, validationErrors } from "../../middlewares";
 import { body, param } from "express-validator";
@@ -164,5 +166,9 @@ router.get(
   validationErrors,
   checkUsernameExists
 );
+
+router.get("/leaderboard/top100", top100Get);
+
+router.get("/leaderboard/top10", top10Get);
 
 export default router;

@@ -123,7 +123,7 @@ export const useTop100 = () => {
     const fetchTop100 = async () => {
       try {
         const players: Player[] = await fetchData(
-          import.meta.env.VITE_DB_API + "/leaderboard/top100"
+          import.meta.env.VITE_AUTH_API + "/leaderboard/top100"
         );
         setTop100(players);
       } catch (err) {

@@ -13,6 +13,8 @@ import {
   createUser,
   deleteUser,
   getAllUsers,
+  getTop10,
+  getTop100,
   getUserByEmail,
   getUserById,
   getUserByUsername,
@@ -282,6 +284,32 @@ const checkUsernameExists = async (
   }
 };
 
+const top100Get = async (
+  req: Request,
+  res: Response<UserWithNoPassword[]>,
+  next: NextFunction
+) => {
+  try {
+    const users = await getTop100();
+    res.json(users);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const top10Get = async (
+  req: Request,
+  res: Response<UserWithNoPassword[]>,
+  next: NextFunction
+) => {
+  try {
+    const users = await getTop10();
+    res.json(users);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export {
   userListGet,
   userGet,
@@ -295,4 +323,7 @@ export {
   checkToken,
   checkEmailExists,
   checkUsernameExists,
+  top100Get,
+  top10Get,
 };
+ 

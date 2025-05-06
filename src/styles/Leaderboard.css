@@ -1,0 +1,112 @@
+.leaderboard-container {
+    padding: 2rem;
+  }
+  
+  .main-header {
+    text-align: left;
+    font-size: 2.5rem;
+  }
+  
+  .top10-header {
+    text-align: center;
+    margin: 2rem 0 1rem;
+    font-size: 2rem;
+  }
+  
+  /* Top 10 Carousel */
+  .carousel-container {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto 3rem;
+  }
+  
+  .carousel-wrapper {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+  }
+  
+  .carousel-card {
+    min-width: 100%;
+    text-align: center;
+    padding: 2rem;
+    box-sizing: border-box;
+  }
+  
+  .laurel-wrapper {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .laurel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100px;
+    height: 100px;
+    z-index: 1;
+  }
+  
+  .carousel-rank {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 0.5rem 0;
+  }
+  
+
+  .avatar {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    z-index: 2;
+    position: relative;
+  }
+  
+  /* Arrows */  
+  .nav-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #045f04;
+    border: none;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    z-index: 10;
+  
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+    font-size: 2rem;
+  }
+  
+
+  #prev-button {
+    left: 0;
+  }
+  #next-button {
+    right: 0;
+  }
+  
+  /* Top 100 List */
+  .top100-list {
+    margin-top: 2rem;
+    padding: 0 1rem;
+  }
+  .player-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.5rem 0;
+  }
+  .rank {
+    width: 3rem;
+    font-weight: bold;
+  }
+
+  .name {
+    flex: 1;
+  }
+  

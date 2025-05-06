@@ -28,7 +28,7 @@ const MyPostsView = () => {
         (post) =>
           user &&
           user.user_id === post.user_id && (
-            <AllPosts key={post.post_id} mockdata={post} />
+            <AllPosts key={post.post_id} item={post} deleteMedia={() => {}} />
           )
       )}
     </>

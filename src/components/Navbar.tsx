@@ -2,7 +2,6 @@ import { useState } from "react";
 import "./Navbar.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
-// import { DropdownMenu, DropdownMenuNotLoggedIn } from "./DropdownMenu";
 import { DropdownMenu, DropdownMenuNotLoggedIn } from "./DropdownMenu";
 import { Link } from "react-router-dom";
 import LoginRegisterPopup from "./LoginRegisterPopup";
@@ -67,6 +66,9 @@ const Navbar = () => {
             </li>
             <li>
               <Link to={"/posts"}>Posts</Link>
+            </li>
+            <li>
+              <Link to={"/leaderboard"}>Leaderboard</Link>
             </li>
           </ul>
         </div>

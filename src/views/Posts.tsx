@@ -9,11 +9,15 @@ const Posts = () => {
 
   const { postArray } = usePost();
 
+  const handleDelete = (postId: number) => {
+    setPostItems((prevItems) =>
+      prevItems.filter((item) => item.post_id !== postId)
+    );
+  };
+
   useEffect(() => {
     setPostItems(postArray);
   }, [postArray]);
-
-  // console.log("media itemit:", postItems);
 
   return (
     <>
@@ -27,7 +31,8 @@ const Posts = () => {
       <hr style={{ width: "90vw", margin: "auto" }} />
 
       {[...postItems].reverse().map((post) => (
-        <AllPosts key={post.post_id} mockdata={post} />
+        <AllPosts key={post.post_id} item={post} deleteMedia={handleDelete} />
+
       ))}
     </>
   );

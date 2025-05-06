@@ -67,7 +67,7 @@ CREATE TABLE `comments` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 CREATE TABLE `Likes` (
-  `like_id` INT(11) NOT NULL PRIMARY KEY,
+  `like_id` INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `post_id` INT(11) NOT NULL,
   `user_id` INT(11) NOT NULL,
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -107,7 +107,7 @@ CREATE TABLE `tasks`(
   `year` INT(11) NOT NULL DEFAULT 2025
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- TASK w User liitäntätaulukko WIP
+-- TASK w User liitäntätaulukko
 
 CREATE TABLE `user_task` (
   `task_id` INT NOT NULL,
@@ -130,6 +130,10 @@ INSERT INTO users (user_id, username, email, password)
   VALUES 
   (1, 'testi', 'testi@example.com', 'testi'),
   (2, 'oppilas', 'o@example.com', 'salasana123');
+
+
+-- Test User with task
+
 
 
 INSERT INTO tasks (task_id, task_title, task_description, points, level) 
@@ -163,3 +167,11 @@ VALUES
 (1,2),
 (3,2),
 (3,3);
+
+-- Kommentti testi --- 
+
+INSERT INTO comments (user_id, comment, post_id)
+VALUES
+(1, 'Hyvää työtä puiston siivouksessa! Näyttää tosi siistiltä.', 3),
+(2, 'Tapahtuma kuulosti mielenkiintoiselta, harmi että en päässyt mukaan.', 3),
+(1, 'Onko tämä se puisto, joka oli tosi roskaantunut ennen?', 3);

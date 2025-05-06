@@ -1,12 +1,18 @@
 import {
+  Comment,
   FullPost,
+  Likes,
   MediaItemWithOwner,
   ProfilePic,
   Tasks,
   UserWithNoPassword,
 } from "ecwtypes/EcoWDBTypes";
 import { fetchData } from "../lib/functions";
+<
+import { useEffect, useState } from 'react';
+
 import { Credentials, RegisterCredentials } from "ecwtypes/LocalTypes.ts";
+
 import {
   AvailableResponse,
   LoginResponse,
@@ -87,15 +93,80 @@ const useUser = () => {
     );
     return tulos;
   };
+  const getUserById = async (id: number) => {
+    return await fetchData<UserWithNoPassword>(
+      import.meta.env.VITE_AUTH_API + "/users/" + id
+    );
+  };
 
   return {
     postRegister,
     getUserByToken,
     getUsernameAvailable,
     getEmailAvailable,
+    getUserById,
   };
 };
 export { useUser };
+
+
+//Leaderboard
+export interface Player {
+  id: number;
+  name: string;
+  points: number;
+  avatar: string;
+}
+
+export const useTop100 = () => {
+  const [top100, setTop100] = useState<Player[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchTop100 = async () => {
+      try {
+        const players: Player[] = await fetchData(
+          import.meta.env.VITE_DB_API + '/leaderboard/top100'
+        );
+        setTop100(players);
+      } catch (err) {
+        console.error('Failed to fetch top 100:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTop100();
+  }, []);
+
+  return { top100, loading };
+};
+
+export const useTop10 = () => {
+  const [top10, setTop10] = useState<Player[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchTop10 = async () => {
+      try {
+        const players: Player[] = await fetchData(
+          import.meta.env.VITE_DB_API + '/leaderboard/top10'
+        );
+        setTop10(players);
+      } catch (err) {
+        console.error('Failed to fetch top 10:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTop10();
+  }, []);
+
+  return { top10, loading };
+};
+
+// POSTS
 
 const usePost = () => {
   const [postArray, setMediaArray] = useState<MediaItemWithOwner[]>([]);
@@ -165,7 +236,21 @@ const usePost = () => {
       options
     );
   };
-  return { postArray, newPost };
+
+  const deletePostbyID = async (post_id: number, token: string) => {
+    const options = {
+      method: "DELETE",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+    return await fetchData<MessageResponse>(
+      import.meta.env.VITE_POST_API + "/post/" + post_id,
+      options
+    );
+  };
+
+  return { postArray, newPost, deletePostbyID };
 };
 
 const useFile = () => {
@@ -241,6 +326,7 @@ const useImage = () => {
   return { sendImage, getProfileImage, newImage };
 };
 
+
 const useTasks = () => {
   const getTasks = async () => {
     try {
@@ -266,3 +352,135 @@ const useTasks = () => {
 };
 
 export { usePost, useFile, useImage, useTasks };
+
+// COMMENTS
+
+const useComment = () => {
+  const { getUserById } = useUser();
+
+  const getCommentsByPostId = async (post_id: number) => {
+    const comments = await fetchData<Comment[]>(
+      import.meta.env.VITE_POST_API + "/comments/bypost/" + post_id
+    );
+    // // Send a GET request to auth api and add username to all comments
+    const commentsWithUsername = await Promise.all<
+      Comment & { username: string }
+    >(
+      comments.map(async (comment) => {
+        const user = await getUserById(comment.user_id);
+        return { ...comment, username: user.username };
+      })
+    );
+    return commentsWithUsername;
+  };
+
+  // lähetä kommentti
+  const postComment = async (
+    comment: string,
+    post_id: number,
+    token: string
+  ) => {
+    const options = {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + token,
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({ post_id, comment }),
+    };
+    // return the data
+    return await fetchData<MessageResponse>(
+      import.meta.env.VITE_POST_API + "/comments",
+      options
+    );
+  };
+  // kommenttien määrä
+  const getCommentCountByMediaId = async (id: number) => {
+    return await fetchData<{ count: number }>(
+      import.meta.env.VITE_POST_API + "/comments/count/" + id
+    );
+  };
+
+  // delete comment
+  const deleteCommentbyID = async (comment_id: number, token: string) => {
+    const options = {
+      method: "DELETE",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+    return await fetchData<MessageResponse>(
+      import.meta.env.VITE_POST_API + "/comments/" + comment_id,
+      options
+    );
+  };
+
+  return {
+    postComment,
+    getCommentsByPostId,
+    getCommentCountByMediaId,
+    deleteCommentbyID,
+  };
+};
+
+// LIKES
+const useLike = () => {
+  const postLike = async (post_id: number, token: string) => {
+    // Send a POST request to /likes with object { media_id } and the token in the Authorization header.
+    const options = {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + token,
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({ post_id }),
+    };
+    // return the data
+    return await fetchData<MessageResponse>(
+      import.meta.env.VITE_POST_API + "/likes",
+      options
+    );
+  };
+
+  const deleteLike = async (like_id: number, token: string) => {
+    // Send a DELETE request to /likes/:like_id with the token in the Authorization header.
+    const options = {
+      method: "DELETE",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+    // return the data
+    return await fetchData<MessageResponse>(
+      import.meta.env.VITE_POST_API + "/likes/" + like_id,
+      options
+    );
+  };
+
+  // Tykkäyksien määrä
+  const getCountByMediaId = async (post_id: number) => {
+    // Send a GET request to /likes/count/:media_id to get the number of likes.
+    return await fetchData<{ count: number }>(
+      import.meta.env.VITE_POST_API + "/likes/count/" + post_id
+    );
+  };
+
+  const getUserLike = async (post_id: number, token: string) => {
+    // Send a GET request to /likes/bymedia/user/:media_id to get the user's like on the media. -> tarvitaan options koska haetaan tietyn käyttäjän
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+    return await fetchData<Likes>(
+      import.meta.env.VITE_POST_API + "/likes/bypost/user/" + post_id,
+      options
+    );
+  };
+
+  return { postLike, deleteLike, getCountByMediaId, getUserLike };
+};
+
+export { usePost, useFile, useImage, useComment, useLike };
+

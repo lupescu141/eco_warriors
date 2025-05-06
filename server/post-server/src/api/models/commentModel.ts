@@ -89,23 +89,10 @@ const updateComment = async (
   user_id: number
 ): Promise<MessageResponse> => {
   let sql = "";
-  //
-  //
-  // Rewrite this
-  /*   if (user_level === 'Admin') {
-    sql = 'UPDATE comments SET comment_text = ? WHERE comment_id = ?';
-  } else {*/
+
   sql =
     "UPDATE comments SET comment_text = ? WHERE comment_id = ? AND user_id = ?";
-
-  /*     user_level === 'Admin'
-      ? [comment_text, comment_id]
-      : */
   const params = [comment_text, comment_id, user_id];
-  //
-  //
-  //
-
   const [result] = await promisePool.execute<ResultSetHeader>(sql, params);
 
   if (result.affectedRows === 0) {
@@ -120,20 +107,9 @@ const deleteComment = async (
   user_id: number
 ): Promise<MessageResponse> => {
   let sql = "";
-  //
-  //
-  // Rewrite this
-  /*   if (user_level === 'Admin') {
-    sql = 'DELETE FROM comments WHERE comment_id = ?';
-  } else { */
+
   sql = "DELETE FROM comments WHERE comment_id = ? AND user_id = ?";
-
-  // user_level === 'Admin' ? [id] :
   const params = [id, user_id];
-  //
-  //
-  //
-
   const [result] = await promisePool.execute<ResultSetHeader>(sql, params);
 
   if (result.affectedRows === 0) {

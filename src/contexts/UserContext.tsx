@@ -27,8 +27,8 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
       if (loginResult) {
         localStorage.setItem("token", loginResult.token);
       }
-      // set user to state
       setUser(loginResult.user);
+      // set user to state
       // close modal
       callback();
     } catch (e) {

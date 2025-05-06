@@ -8,8 +8,7 @@ import {
   UserWithNoPassword,
 } from "ecwtypes/EcoWDBTypes";
 import { fetchData } from "../lib/functions";
-<
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 import { Credentials, RegisterCredentials } from "ecwtypes/LocalTypes.ts";
 
@@ -21,7 +20,6 @@ import {
   UploadResponse,
   UserResponse,
 } from "ecwtypes/MessageTypes.ts";
-import { useEffect, useState } from "react";
 
 // AUTENTIKOINTI
 
@@ -109,7 +107,6 @@ const useUser = () => {
 };
 export { useUser };
 
-
 //Leaderboard
 export interface Player {
   id: number;
@@ -126,11 +123,11 @@ export const useTop100 = () => {
     const fetchTop100 = async () => {
       try {
         const players: Player[] = await fetchData(
-          import.meta.env.VITE_DB_API + '/leaderboard/top100'
+          import.meta.env.VITE_DB_API + "/leaderboard/top100"
         );
         setTop100(players);
       } catch (err) {
-        console.error('Failed to fetch top 100:', err);
+        console.error("Failed to fetch top 100:", err);
       } finally {
         setLoading(false);
       }
@@ -150,11 +147,11 @@ export const useTop10 = () => {
     const fetchTop10 = async () => {
       try {
         const players: Player[] = await fetchData(
-          import.meta.env.VITE_DB_API + '/leaderboard/top10'
+          import.meta.env.VITE_DB_API + "/leaderboard/top10"
         );
         setTop10(players);
       } catch (err) {
-        console.error('Failed to fetch top 10:', err);
+        console.error("Failed to fetch top 10:", err);
       } finally {
         setLoading(false);
       }
@@ -253,6 +250,8 @@ const usePost = () => {
   return { postArray, newPost, deletePostbyID };
 };
 
+// FILES
+
 const useFile = () => {
   const postFile = async (file: File, token: string) => {
     const formData = new FormData();
@@ -326,6 +325,7 @@ const useImage = () => {
   return { sendImage, getProfileImage, newImage };
 };
 
+// TASKS
 
 const useTasks = () => {
   const getTasks = async () => {
@@ -350,8 +350,6 @@ const useTasks = () => {
   };
   return { getTasks, getUserTasks };
 };
-
-export { usePost, useFile, useImage, useTasks };
 
 // COMMENTS
 
@@ -482,5 +480,4 @@ const useLike = () => {
   return { postLike, deleteLike, getCountByMediaId, getUserLike };
 };
 
-export { usePost, useFile, useImage, useComment, useLike };
-
+export { usePost, useFile, useImage, useTasks, useComment, useLike };

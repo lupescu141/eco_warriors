@@ -1,0 +1,8 @@
+.like-container {
+  width: 100%;
+}
+.like-btn {
+  display: inline;
+  font-size: 1.5rem;
+  cursor: pointer;
+}

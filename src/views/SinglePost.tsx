@@ -2,16 +2,20 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { NavigateFunction } from "react-router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "../styles/Posts.css";
-import { faCircleUser, faClock } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowLeft,
+  faCircleUser,
+  faClock,
+} from "@fortawesome/free-solid-svg-icons";
 import Comments from "../components/Comments";
-import { Post } from "../mockdata/mockdata";
+import { MediaItemWithOwner } from "ecwtypes/EcoWDBTypes";
+import Likes from "../components/Likes";
 
 const SinglePost = () => {
   const navigate: NavigateFunction = useNavigate();
   const { state } = useLocation();
-  const item: Post = state.item;
+  const item: MediaItemWithOwner = state.item;
 
-  // console.log("löytyykä", item);
   if (!item) {
     return <div>Error!</div>;
   }
@@ -20,14 +24,18 @@ const SinglePost = () => {
     <>
       <div className="posts-header-container">
         <h1>Posts</h1>
-        <h2>{item.title}</h2>
+        <h2>{item.post_title}</h2>
       </div>
-      <hr style={{ width: "90vw", margin: "auto", backgroundColor: "red" }} />
+      <hr style={{ width: "90vw", margin: "auto" }} />
+      <div className="back-btn-container">
+        <button className="go-back" onClick={() => navigate(-1)}>
+          <FontAwesomeIcon icon={faArrowLeft} />
+        </button>
+      </div>
+
       <div className="single-post-container">
-        <img
-          src={"https://placehold.co/300x200@2x/light-grey/white/png?text=IMG"}
-        ></img>
-        <h2>{item.title}</h2>
+        <img src={item.filename} alt={item.post_title}></img>
+        <h2>{item.post_title}</h2>
         <div className="datetime-user-container">
           <div className="datetime-user">
             <FontAwesomeIcon icon={faCircleUser} className="icon" />{" "}
@@ -35,10 +43,10 @@ const SinglePost = () => {
           </div>
           <div className="datetime-user">
             <FontAwesomeIcon icon={faClock} className="icon" />
-            <p>{item.created_at}</p>
+            <p>{new Date(item.created_at).toLocaleString("fi-FI")}</p>
           </div>
         </div>
-        <p>{item.description}</p>
+        <p>{item.post_description}</p>
 
         {/* TAGS */}
         <div className="tag-container">
@@ -46,10 +54,16 @@ const SinglePost = () => {
           <span>Eco-friendly</span>
         </div>
 
-        <button onClick={() => navigate(-1)}>Go back</button>
+        {/*LIKES*/}
+        <Likes item={item} />
 
         {/* COMMENTS */}
-        <Comments />
+        <Comments
+          item={item}
+          deleteComment={(commentId) =>
+            console.log(`Delete comment with ID: ${commentId}`)
+          }
+        />
       </div>
     </>
   );

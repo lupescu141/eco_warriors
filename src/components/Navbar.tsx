@@ -2,17 +2,15 @@ import { useState } from "react";
 import "./Navbar.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
-// import { DropdownMenu, DropdownMenuNotLoggedIn } from "./DropdownMenu";
 import { DropdownMenu, DropdownMenuNotLoggedIn } from "./DropdownMenu";
 import { Link } from "react-router-dom";
 import LoginRegisterPopup from "./LoginRegisterPopup";
 import { useUserContext } from "../hooks/contextHooks";
+import { useEffect } from "react";
+import { useImage } from "../hooks/apiHooks";
+import { Pfresposne } from "ecwtypes/MessageTypes";
 
-type NavProps = {
-  image: string;
-};
-
-const Navbar = ({ image }: NavProps) => {
+const Navbar = () => {
   /* used for checking if user is logged in */
   const { user } = useUserContext();
   /* Handles the visibility of dropdown vindow */
@@ -34,6 +32,24 @@ const Navbar = ({ image }: NavProps) => {
   const handlePopupType = () => {
     setPopupType("login");
   };
+
+  const { getProfileImage } = useImage();
+  const [imageItem, setImage] = useState<Pfresposne>({
+    origin: "default",
+    filename: "default",
+    message: "default",
+  });
+
+  useEffect(() => {
+    const getImage = async () => {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+      const image = await getProfileImage(token);
+      if (!image) return;
+      setImage(image);
+    };
+    getImage();
+  }, []);
 
   return (
     <>
@@ -67,7 +83,7 @@ const Navbar = ({ image }: NavProps) => {
           {user && (
             <img
               className="profileImg"
-              src="src\mockup_delete_on_build\shrek.jpg"
+              src={imageItem.filename}
               alt="Profile picture"
             ></img>
           )}

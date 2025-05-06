@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./LoginRegisterPopup.css";
 import { useForm } from "../hooks/formHooks";
-import { RegisterCredentials } from "../types/LocalTypes";
+import { RegisterCredentials } from "ecwtypes/LocalTypes";
 import { useUser } from "../hooks/apiHooks";
 import { useUserContext } from "../hooks/contextHooks";
 

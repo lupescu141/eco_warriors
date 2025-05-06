@@ -1,9 +1,24 @@
 import AllPosts from "../components/AllPosts";
-import { mockdata } from "../mockdata/mockdata";
+import { usePost } from "../hooks/apiHooks";
 import "../styles/Posts.css";
+import { useEffect, useState } from "react";
+import { MediaItemWithOwner } from "ecwtypes/EcoWDBTypes";
 
 const Posts = () => {
-  console.log(mockdata);
+  const [postItems, setPostItems] = useState<MediaItemWithOwner[]>([]);
+
+  const { postArray } = usePost();
+
+  const handleDelete = (postId: number) => {
+    setPostItems((prevItems) =>
+      prevItems.filter((item) => item.post_id !== postId)
+    );
+  };
+
+  useEffect(() => {
+    setPostItems(postArray);
+  }, [postArray]);
+
   return (
     <>
       <div
@@ -15,8 +30,9 @@ const Posts = () => {
       </div>
       <hr style={{ width: "90vw", margin: "auto" }} />
 
-      {mockdata.map((post) => (
-        <AllPosts key={post.post_id} mockdata={post} />
+      {[...postItems].reverse().map((post) => (
+        <AllPosts key={post.post_id} item={post} deleteMedia={handleDelete} />
+
       ))}
     </>
   );

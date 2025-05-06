@@ -15,3 +15,35 @@
 .scroll-to-top-btn:hover {
   background-color: var(--dark-green) !important;
 }
+
+body:has(.upload-modal, .popup-overlay) {
+  overflow: hidden;
+}
+
+button {
+  height: 3rem;
+  width: 8rem;
+  padding: 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  background-color: #0d9d00;
+  box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.39);
+  transition: all 0.2s;
+}
+
+.back-btn-container {
+  width: 90vw;
+  margin: auto;
+}
+
+.go-back {
+  margin: auto;
+  width: 0;
+  padding: 0;
+  color: #1f1f1f;
+  background: none;
+  box-shadow: none;
+}

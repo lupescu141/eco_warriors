@@ -1,11 +1,11 @@
 import { Express } from "express";
 import request from "supertest";
-import { User, UserWithNoPassword } from "../src/types/EcoWDBTypes";
+import { User, UserWithNoPassword } from "ecwtypes/EcoWDBTypes";
 import {
   UserResponse,
   LoginResponse,
   MessageResponse,
-} from "../src/types/MessageTypes";
+} from "ecwtypes/MessageTypes";
 
 const createUser = (
   url: string | Express,

@@ -2,9 +2,9 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import { NextFunction, Request, Response } from "express";
 import CustomError from "../../classes/CustomError";
-import { LoginResponse } from "../../types/MessageTypes";
+import { LoginResponse } from "ecwtypes/MessageTypes";
 import { getUserByUsername } from "../models/userModel";
-import { TokenContent, User } from "../../types/EcoWDBTypes";
+import { TokenContent, User } from "ecwtypes/EcoWDBTypes";
 
 const login = async (
   req: Request<object, object, { username: string; password: string }>,
